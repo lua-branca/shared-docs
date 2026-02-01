@@ -98,7 +98,7 @@
         <div id="map"></div>
 
         <script>
-            var map = L.map('map').setView([38.915, 139.835], 13);
+            var map = L.map('map');
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -117,10 +117,16 @@
                 { name: "香梅咲", lat: 38.9195, lon: 139.8330, desc: "ランチ候補" }
             ];
 
+            var markerGroup = L.featureGroup();
             spots.forEach(function (spot) {
-                L.marker([spot.lat, spot.lon]).addTo(map)
+                var marker = L.marker([spot.lat, spot.lon])
                     .bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
+                marker.addTo(markerGroup);
             });
+            markerGroup.addTo(map);
+
+            // 全てのピンが収まるようにズーム・位置を自動調整
+            map.fitBounds(markerGroup.getBounds(), { padding: [50, 50] });
         </script>
 
         <p class="note" style="font-size: 0.9em; margin-top: 10px;">
