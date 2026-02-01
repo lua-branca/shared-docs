@@ -118,15 +118,22 @@
             ];
 
             var markerGroup = L.featureGroup();
+            var cityGroup = L.featureGroup(); // 市街地のみのグループ（初期表示用）
+
             spots.forEach(function (spot) {
                 var marker = L.marker([spot.lat, spot.lon])
                     .bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
                 marker.addTo(markerGroup);
+
+                // 黒森歌舞伎（遠い場所）以外をcityGroupに入れる
+                if (spot.name.indexOf("黒森歌舞伎") === -1) {
+                    marker.addTo(cityGroup);
+                }
             });
             markerGroup.addTo(map);
 
-            // 全てのピンが収まるようにズーム・位置を自動調整
-            map.fitBounds(markerGroup.getBounds(), { padding: [50, 50] });
+            // 市街地のスポットだけが収まるようにズーム（黒森は除外して拡大表示）
+            map.fitBounds(cityGroup.getBounds(), { padding: [50, 50] });
         </script>
 
         <p class="note" style="font-size: 0.9em; margin-top: 10px;">
