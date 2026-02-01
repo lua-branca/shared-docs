@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>旅の計画：山形（2026/02/14-16）</title>
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
         body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
@@ -70,6 +75,15 @@
             color: #666;
             font-size: 0.9em;
         }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            z-index: 1;
+        }
     </style>
 </head>
 
@@ -78,17 +92,40 @@
     <h1>旅の計画：山形（酒田・庄内）</h1>
 
     <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-        <h3>🗺️ Googleマップでピンを見る</h3>
-        <p>今回のスポット（宿、観光地、飲食店など10ヶ所）をまとめたマップデータを作成しました。<br>
-            以下のファイルをダウンロードして、Googleマイマップに取り込むと一括でピンが表示されます。</p>
-        <p>
-            <a href="map_data.kml" download style="font-weight: bold; font-size: 1.1em;">💾 マップデータをダウンロード (KML)</a>
-        </p>
-        <p class="note" style="font-size: 0.9em;">
-            <strong>使い方:</strong><br>
-            1. 上記リンクからファイルを保存。<br>
-            2. <a href="https://www.google.com/maps/d/" target="_blank">Googleマイマップ</a> を開く。<br>
-            3. 「新しい地図を作成」 > インポート > ファイルを選択。
+        <h3>🗺️ マップ (Map)</h3>
+        <p>今回のスポット（10ヶ所）をピン留めしました。拡大・縮小して場所を確認できます。</p>
+
+        <div id="map"></div>
+
+        <script>
+            var map = L.map('map').setView([38.915, 139.835], 13);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+            var spots = [
+                { name: "若葉旅館", lat: 38.913839, lon: 139.836168, desc: "宿泊先" },
+                { name: "黒森歌舞伎 (日枝神社)", lat: 38.84661, lon: 139.81711, desc: "歌舞伎会場(2/15)" },
+                { name: "山居倉庫", lat: 38.91139, lon: 139.836806, desc: "酒田のシンボル" },
+                { name: "海向寺 (即身仏)", lat: 38.91921, lon: 139.83043, desc: "即身仏拝観" },
+                { name: "日和山公園", lat: 38.9190, lon: 139.8280, desc: "六角灯台" },
+                { name: "本間家旧本邸", lat: 38.9147, lon: 139.8395, desc: "豪商の屋敷" },
+                { name: "相馬樓", lat: 38.9194, lon: 139.8333, desc: "舞娘茶屋" },
+                { name: "わだち", lat: 38.9176, lon: 139.8364, desc: "夕食候補(ステーキ)" },
+                { name: "井筒", lat: 38.9176, lon: 139.8354, desc: "夕食候補(居酒屋)" },
+                { name: "香梅咲", lat: 38.9195, lon: 139.8330, desc: "ランチ候補" }
+            ];
+
+            spots.forEach(function (spot) {
+                L.marker([spot.lat, spot.lon]).addTo(map)
+                    .bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
+            });
+        </script>
+
+        <p class="note" style="font-size: 0.9em; margin-top: 10px;">
+            <a href="map_data.kml" download>💾 Googleマップ用データ(KML)をダウンロード</a><br>
+            (Googleマイマップに取り込みたい場合はこちら)
         </p>
     </div>
 
