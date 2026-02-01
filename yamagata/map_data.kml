@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>山形酒田めぐり2026</name>
+    <description>2026年2月の山形（酒田・庄内）旅のスポットリスト</description>
+    <Style id="icon-1899-0288D1-nodesc-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Placemark>
+      <name>若葉旅館</name>
+      <address>山形県酒田市本町2-3-9</address>
+      <description>宿泊先。「おしん」ロケ地。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>黒森日枝神社 (黒森歌舞伎)</name>
+      <address>山形県酒田市黒森村中47</address>
+      <description>歌舞伎会場。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>山居倉庫</name>
+      <address>山形県酒田市山居町1-1-20</address>
+      <description>酒田のシンボル。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>海向寺 (即身仏)</name>
+      <address>山形県酒田市日吉町2-7-12</address>
+      <description>即身仏が2体祀られている。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>日和山公園</name>
+      <address>山形県酒田市南新町1-10</address>
+      <description>六角灯台、北前船。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>本間家旧本邸</name>
+      <address>山形県酒田市御成町7-7</address>
+      <description>豪商の屋敷。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>相馬樓</name>
+      <address>山形県酒田市日吉町2-9-37</address>
+      <description>舞娘茶屋。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>ビフテキ屋わだち</name>
+      <address>山形県酒田市中町2-1-18</address>
+      <description>夕食候補（ステーキ）。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>旬味 井筒</name>
+      <address>山形県酒田市中町2-3-27</address>
+      <description>夕食候補（居酒屋）。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>香梅咲 (Komesaku)</name>
+      <address>山形県酒田市日吉町1-3-16</address>
+      <description>ランチ候補。老舗。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+  </Document>
+</kml>
