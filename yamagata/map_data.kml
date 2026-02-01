@@ -25,6 +25,12 @@
       <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
     </Placemark>
     <Placemark>
+      <name>南洲神社</name>
+      <address>山形県酒田市飯森山2-304-10</address>
+      <description>西郷隆盛を祀る。</description>
+      <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+    </Placemark>
+    <Placemark>
       <name>黒森日枝神社 (黒森歌舞伎)</name>
       <address>山形県酒田市黒森村中47</address>
       <description>歌舞伎会場。</description>
