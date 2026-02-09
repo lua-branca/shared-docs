@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026.02.11 建国記念の日 神社巡拝ツアー</title>
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
         :root {
             --primary-color: #8B4513;
@@ -66,6 +71,15 @@
             display: block;
         }
 
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd;
+            z-index: 1;
+        }
+
         .timeline {
             position: relative;
             margin: 2rem 0;
@@ -115,6 +129,19 @@
             color: #666;
         }
 
+        .address {
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        .address a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--primary-color);
+        }
+
         .drive {
             color: #999;
             font-size: 0.85rem;
@@ -144,10 +171,6 @@
             color: #777;
             border-top: 1px solid #ddd;
         }
-
-        a {
-            color: var(--primary-color);
-        }
     </style>
 </head>
 
@@ -166,6 +189,38 @@
                 一年の仕事の基盤となる「気づき」を持ち帰る旅。</p>
         </div>
 
+        <!-- Map Container -->
+        <div id="map"></div>
+        <script>
+            var map = L.map('map').setView([35.60, 140.10], 9); // Center roughly appropriately
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+            var spots = [
+                { name: "永田町駅 4番出口", lat: 35.6786, lon: 139.7403, desc: "集合場所 (06:15)" },
+                { name: "① 安房神社", lat: 34.9224, lon: 139.8367, desc: "金運・産業創始の神" },
+                { name: "② 洲崎神社", lat: 34.9680, lon: 139.7582, desc: "再起・再出発の神" },
+                { name: "③ 長福寿寺", lat: 35.4018, lon: 140.2295, desc: "金運増大・吉ゾウくん" },
+                { name: "④ 鹿島神宮", lat: 35.9689, lon: 140.6314, desc: "始まり・武運長久の神 (合流点)" },
+                { name: "⑤ 香取神宮", lat: 35.8861, lon: 140.5289, desc: "決断・道開きの神" },
+                { name: "ワーズワース 佐原店", lat: 35.8905, lon: 140.4990, desc: "夕食 (イタリアン)" } // Approx coords based on address
+            ];
+
+            var group = L.featureGroup();
+
+            spots.forEach(function (spot) {
+                var marker = L.marker([spot.lat, spot.lon])
+                    .bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
+                marker.addTo(group);
+                marker.addTo(map);
+            });
+
+            // Fit map to show all spots
+            map.fitBounds(group.getBounds(), { padding: [50, 50] });
+        </script>
+
         <section class="timeline">
             <!-- 06:15 -->
             <div class="timeline-item">
@@ -173,6 +228,8 @@
                 <div class="content">
                     <span class="spot-name">永田町駅 4番出口 集合</span>
                     <span class="spot-desc">皇居・宮中三殿へ遥拝し、旅の安全と目的をセットアップして出発。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=東京都千代田区永田町1-11-28"
+                            target="_blank">📍 東京都千代田区永田町1-11-28</a></span>
                     <div class="drive">移動: 2時間30分 (アクアライン経由)</div>
                 </div>
             </div>
@@ -183,6 +240,8 @@
                 <div class="content">
                     <span class="spot-name">① 安房神社 (50分)</span>
                     <span class="spot-desc">【金運・産業創始の神】<br>一年の「仕事の種」を授かる意識で、境内を巡ります。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=千葉県館山市大神宮589"
+                            target="_blank">📍 千葉県館山市大神宮589</a></span>
                     <div class="drive">移動: 30分 (海岸線ドライブ)</div>
                 </div>
             </div>
@@ -193,6 +252,8 @@
                 <div class="content">
                     <span class="spot-name">② 洲崎神社 (50分)</span>
                     <span class="spot-desc">【再起・再出発の神】<br>東京湾の入り口を守る神。海に向かう鳥居で心を洗い流します。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=千葉県館山市洲崎1344"
+                            target="_blank">📍 千葉県館山市洲崎1344</a></span>
                     <div class="drive">移動: 2時間 (昼食休憩含む・北上)</div>
                 </div>
             </div>
@@ -203,6 +264,8 @@
                 <div class="content">
                     <span class="spot-name">③ 長福寿寺 (50分)</span>
                     <span class="spot-desc">【金運増大・吉ゾウくん】<br>あえてお寺を挟み、神仏習合の視点を。「喜び」のエネルギーをチャージ。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=千葉県長生郡長南町長南969"
+                            target="_blank">📍 千葉県長生郡長南町長南969</a></span>
                     <div class="drive">移動: 1時間30分 (一気に鹿島へ)</div>
                 </div>
             </div>
@@ -214,6 +277,8 @@
                     <span class="spot-name">④ 鹿島神宮 (60分)</span>
                     <span
                         class="spot-desc">【始まり・武運長久の神】<br>「ここから始める」という強力な意志を宣言します。<br><strong>★新潟メンバー合流ポイント</strong></span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=茨城県鹿嶋市宮中2306-1"
+                            target="_blank">📍 茨城県鹿嶋市宮中2306-1</a></span>
                     <div class="drive">移動: 30分 (香取へ戻る)</div>
                 </div>
             </div>
@@ -224,6 +289,8 @@
                 <div class="content">
                     <span class="spot-name">⑤ 香取神宮 (60分)</span>
                     <span class="spot-desc">【決断・道開きの神】<br>日没後の静寂な境内で、迷いを断ち切り「道」を定める決断を。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=千葉県香取市香取1697-1"
+                            target="_blank">📍 千葉県香取市香取1697-1</a></span>
                     <div class="drive">移動: 15分 (すぐ近く)</div>
                 </div>
             </div>
@@ -234,6 +301,8 @@
                 <div class="content">
                     <span class="spot-name">夕食：ワーズワース佐原店</span>
                     <span class="spot-desc">【シェアリング・直会】<br>イタリアンディナーで一日の体験を分かち合い、現実に着地させます。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=千葉県香取市佐原イ491-1"
+                            target="_blank">📍 千葉県香取市佐原イ491-1</a></span>
                     <div class="drive">移動: 1時間30分 (東京へ)</div>
                 </div>
             </div>
@@ -244,6 +313,8 @@
                 <div class="content">
                     <span class="spot-name">永田町駅 解散</span>
                     <span class="spot-desc">皇居へ感謝を伝え、解散。 (22:00頃予定)</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=東京都千代田区永田町1-11-28"
+                            target="_blank">📍 東京都千代田区永田町1-11-28</a></span>
                 </div>
             </div>
         </section>
