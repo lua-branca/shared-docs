@@ -5,389 +5,554 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>旅の計画：山形（2026/02/14-16）</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&display=swap"
+        rel="stylesheet">
+
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <style>
-        body {
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        :root {
+            --primary: #2b4e72;
+            /* Sakata Indigo */
+            --accent: #c5a059;
+            /* Rice Gold */
+            --bg: #f5f7fa;
+            --surface: #ffffff;
+            --text-main: #333333;
+            --text-sub: #666666;
+            --font-main: "Noto Sans JP", sans-serif;
+            --font-serif: "Shippori Mincho", serif;
         }
 
-        h1 {
-            border-bottom: 2px solid #555;
-            padding-bottom: 10px;
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a3c5a 0%, #2b4e72 100%);
+            color: white;
+            padding: 40px 20px 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            margin: 0 0 10px;
+            letter-spacing: 0.05em;
+        }
+
+        .hero .date {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            margin-bottom: 24px;
+            overflow: hidden;
         }
 
         h2 {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border-left: 5px solid #2c3e50;
-            margin-top: 30px;
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 24px;
         }
 
         h3 {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-top: 25px;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin: 24px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        ul {
-            list-style-type: disc;
+        /* Weather Widget */
+        #weather-widget {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+
+        #weather-widget::-webkit-scrollbar {
+            display: none;
+        }
+
+        .weather-card {
+            background: linear-gradient(to bottom right, #ffffff, #f9f9f9);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 12px;
+            min-width: 100px;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        .weather-current {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .weather-current .temp {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1;
+            margin: 8px 0;
+        }
+
+        .weather-card .temp-range {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .weather-icon {
+            font-size: 1.8rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .date-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
             padding-left: 20px;
+            margin: 20px 0;
         }
 
-        li {
-            margin-bottom: 5px;
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: #e0e0e0;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding-left: 24px;
         }
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            background: var(--surface);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            box-sizing: border-box;
         }
 
-        th {
-            background-color: #f9f9f9;
-            font-weight: bold;
+        .timeline-item.highlight::after {
+            border-color: var(--accent);
+            background: var(--accent);
         }
 
-        .highlight {
-            background-color: #fff3cd;
-            padding: 2px 5px;
-            border-radius: 3px;
+        .time {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 4px;
         }
 
-        .note {
-            color: #666;
-            font-size: 0.9em;
+        .event {
+            font-weight: 500;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+            display: block;
         }
 
-        #map {
-            height: 400px;
-            width: 100%;
+        .detail {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            background: #f8f9fa;
+            padding: 8px 12px;
             border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .tag-res {
+            background: #ffe082;
+            color: #5d4037;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        /* Map */
+        #map {
+            height: 350px;
+            width: 100%;
+            border-radius: 12px;
             z-index: 1;
+        }
+
+        /* List Styling */
+        .spot-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .spot-list li {
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+
+        .spot-list li:last-child {
+            border-bottom: none;
+        }
+
+        .spot-name {
+            font-weight: 700;
+            display: block;
+            color: var(--text-main);
+        }
+
+        .spot-desc {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-download {
+            display: block;
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-download:hover {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>旅の計画：山形（酒田・庄内）</h1>
+    <header class="hero">
+        <p class="date">2026.02.14 Sat - 02.16 Mon</p>
+        <h1>山形・酒田の旅</h1>
 
-    <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-        <h3>🌦️ 現在の天気と予報 (Sakata, Yamagata)</h3>
-
-        <div id="weather-widget"
-            style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-around; margin-top: 15px;">
-            <div style="text-align: center; width: 100%;">Loading weather...</div>
+        <!-- Weather Widget (Injected via JS) -->
+        <div id="weather-area" style="margin-top: 20px;">
+            <div id="weather-widget">
+                <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Loading weather...</div>
+            </div>
         </div>
+    </header>
 
-        <script>
-            (function () {
-                const lat = 38.9138;
-                const lon = 139.8362;
-                const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=3`;
+    <div class="container">
 
-                const weatherCodes = {
-                    0: '☀️ 快晴',
-                    1: '🌤️ 晴れ', 2: '⛅️ 一部曇', 3: '☁️ 曇り',
-                    45: '🌫️ 霧', 48: '🌫️ 霧',
-                    51: '🌧️ 小雨', 53: '🌧️ 小雨', 55: '🌧️ 小雨',
-                    61: '☔️ 雨', 63: '☔️ 雨', 65: '☔️ 雨',
-                    71: '☃️ 雪', 73: '☃️ 雪', 75: '☃️ 雪',
-                    77: '☃️ 霧雪',
-                    80: '🌦️ にわか雨', 81: '🌦️ にわか雨', 82: '🌦️ にわか雨',
-                    85: '🌨️ にわか雪', 86: '🌨️ にわか雪',
-                    95: '⚡️ 雷雨', 96: '⚡️ 雷雨', 99: '⚡️ 雷雨'
-                };
+        <!-- Map Section -->
+        <section class="card">
+            <h2>🗺️ 旅の地図</h2>
+            <div id="map"></div>
+            <a href="map_data.kml" download class="btn-download">💾 Googleマップ用データ(KML)</a>
+        </section>
 
-                function getWeatherIcon(code) {
-                    return weatherCodes[code] || '❓ 不明';
-                }
+        <!-- Basic Info -->
+        <section class="card">
+            <h2>ℹ️ 基本情報</h2>
+            <dl style="margin: 0; display: grid; grid-template-columns: 80px 1fr; gap: 10px 0;">
+                <dt style="color: var(--text-sub); font-size: 0.9rem;">目的地</dt>
+                <dd style="margin: 0; font-weight: 500;">山形県酒田市・庄内エリア</dd>
 
-                function formatDate(dateStr) {
-                    const d = new Date(dateStr);
-                    return `${d.getMonth() + 1}/${d.getDate()}`;
-                }
+                <dt style="color: var(--text-sub); font-size: 0.9rem;">宿泊</dt>
+                <dd style="margin: 0;">
+                    <strong>若葉旅館</strong><br>
+                    <a href="https://www.google.com/maps/search/?api=1&query=山形県酒田市本町2-3-9" target="_blank">📍Google
+                        Map</a>
+                </dd>
+            </dl>
+        </section>
 
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        const widget = document.getElementById('weather-widget');
-                        widget.innerHTML = ''; // Clear loading text
+        <!-- Schedule -->
+        <section class="card">
+            <h2>🗓️ スケジュール</h2>
 
-                        // Current Weather
-                        const currentHtml = `
-                            <div style="background: #fff; padding: 15px; border-radius: 8px; flex: 1; min-width: 140px; text-align: center; border: 2px solid #ddd;">
-                                <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">現在 (Live)</div>
-                                <div style="font-size: 2em; margin: 5px 0;">${data.current.temperature_2m}°C</div>
-                                <div style="font-weight: bold;">${getWeatherIcon(data.current.weather_code)}</div>
+            <h3>Day 1: 2/14(土)</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="time">12:25 - 13:25</span>
+                    <span class="event">✈️ 羽田 → 庄内 (ANA1071)</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="time">13:35頃</span>
+                    <span class="event">🚌 空港リムジンバス</span>
+                    <div class="detail">酒田市役所前 下車 (約35分/810円) → 徒歩4分</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="time">14:15頃</span>
+                    <span class="event">🏨 若葉旅館 チェックイン</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="time">午後</span>
+                    <span class="event">🚶 山居倉庫・周辺散策</span>
+                </div>
+                <div class="timeline-item highlight">
+                    <span class="time">18:30</span>
+                    <span class="event">🍽️ 夕食: 井筒 (Izutsu) <span class="tag-res">予約済</span></span>
+                    <div class="detail">
+                        <a href="https://izutsu01.com/about" target="_blank">公式サイト</a> / 予算5-6千円
+                    </div>
+                </div>
+            </div>
+
+            <h3>Day 2: 2/15(日)</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="time">朝</span>
+                    <span class="event">🍜 朝ラーメン（要確認）</span>
+                </div>
+                <div class="timeline-item highlight">
+                    <span class="time">10:00 -</span>
+                    <span class="event">👹 黒森歌舞伎鑑賞</span>
+                    <div class="detail">場所: 黒森日枝神社 / 防寒必須！</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="time">16:00 - 18:00</span>
+                    <span class="event">🍶 直会（なおらい）</span>
+                    <div class="detail">舞台上での打ち上げ・車座交流</div>
+                </div>
+            </div>
+
+            <h3>Day 3: 2/16(月)</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="time">午前</span>
+                    <span class="event">🚶 フリータイム</span>
+                    <div class="detail">ランチ候補: 香梅咲？</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="time">16:00頃</span>
+                    <span class="event">🚌 酒田駅前発 (バス)</span>
+                    <div class="detail">またはタクシー(16:30頃)で空港へ</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="time">17:40 - 18:45</span>
+                    <span class="event">✈️ 庄内 → 羽田 (ANA400)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historical Perspectives -->
+        <section class="card">
+            <h2>📜 歴史と見立ての視点</h2>
+            <p style="font-size: 0.9rem; color: var(--text-sub);">「西の堺、東の酒田」。4つの視点で街を読み解く。</p>
+
+            <h3>🌲 視点1：自然と古代の知恵</h3>
+            <ul class="spot-list">
+                <li>
+                    <span class="spot-name">山居倉庫</span>
+                    <span class="spot-desc">100年以上現役の米倉庫。ケヤキ並木と二重屋根の天然空調。</span>
+                </li>
+            </ul>
+
+            <h3>⛵ 視点2：北前船と京文化</h3>
+            <ul class="spot-list">
+                <li>
+                    <span class="spot-name">旧鐙屋</span>
+                    <span class="spot-desc">井原西鶴も描いた廻船問屋の繁栄。</span>
+                </li>
+                <li>
+                    <span class="spot-name">相馬樓 / 日和山公園</span>
+                    <span class="spot-desc">舞娘文化と港町の記憶。</span>
+                </li>
+            </ul>
+
+            <h3>⚔️ 視点3：武士の精神と和解</h3>
+            <ul class="spot-list">
+                <li>
+                    <span class="spot-name">本間家旧本邸</span>
+                    <span class="spot-desc">武家造りと商家造りの融合。</span>
+                </li>
+                <li>
+                    <span class="spot-name">南洲神社</span>
+                    <span class="spot-desc">敵将・西郷隆盛を祀る、「和解と敬意」の象徴。</span>
+                </li>
+            </ul>
+
+            <h3>🙏 視点4：極限の信仰</h3>
+            <ul class="spot-list">
+                <li>
+                    <span class="spot-name">海向寺 (即身仏)</span>
+                    <span class="spot-desc">人々の平穏を願い自らを捧げた姿。</span>
+                </li>
+            </ul>
+        </section>
+
+        <footer
+            style="text-align: center; color: var(--text-sub); font-size: 0.8rem; margin-top: 40px; padding-bottom: 20px;">
+            © 2026 Yamagata Trip
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Weather Widget Logic
+        (function () {
+            const lat = 38.9138;
+            const lon = 139.8362;
+            const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=3`;
+
+            const weatherCodes = {
+                0: '☀️', 1: '🌤️', 2: '⛅️', 3: '☁️',
+                45: '🌫️', 48: '🌫️', 51: '🌧️', 53: '🌧️', 55: '🌧️',
+                61: '☔️', 63: '☔️', 65: '☔️', 71: '☃️', 73: '☃️', 75: '☃️',
+                80: '🌦️', 81: '🌦️', 82: '🌦️', 95: '⚡️', 96: '⚡️', 99: '⚡️'
+            };
+
+            function getWeatherIcon(code) { return weatherCodes[code] || '❓'; }
+            function formatDate(dateStr) {
+                const d = new Date(dateStr);
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                return `${d.getMonth() + 1}/${d.getDate()} (${days[d.getDay()]})`;
+            }
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const widget = document.getElementById('weather-widget');
+                    widget.innerHTML = '';
+
+                    // Current (Hero Style)
+                    const currentHtml = `
+                        <div class="weather-card weather-current" style="min-width: 120px; background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3);">
+                            <span class="date-label" style="color: rgba(255,255,255,0.9);">NOW</span>
+                            <span class="weather-icon">${getWeatherIcon(data.current.weather_code)}</span>
+                            <div class="temp">${Math.round(data.current.temperature_2m)}°</div>
+                        </div>
+                    `;
+                    widget.innerHTML += currentHtml;
+
+                    // Forecast
+                    data.daily.time.forEach((time, index) => {
+                        const dateLabel = index === 0 ? 'Today' : (index === 1 ? 'Tmrrw' : formatDate(time));
+                        const html = `
+                            <div class="weather-card" style="color: #333;">
+                                <span class="date-label" style="color: #666;">${dateLabel}</span>
+                                <span class="weather-icon">${getWeatherIcon(data.daily.weather_code[index])}</span>
+                                <div class="temp-range">
+                                    <span style="color: #e74c3c;">${Math.round(data.daily.temperature_2m_max[index])}°</span>
+                                    <span style="color: #ccc;">/</span>
+                                    <span style="color: #3498db;">${Math.round(data.daily.temperature_2m_min[index])}°</span>
+                                </div>
                             </div>
                         `;
-                        widget.innerHTML += currentHtml;
-
-                        // Daily Forecast (3 Days)
-                        data.daily.time.forEach((time, index) => {
-                            const dateLabel = index === 0 ? '今日' : (index === 1 ? '明日' : formatDate(time));
-                            const html = `
-                                <div style="background: #fff; padding: 10px; border-radius: 8px; flex: 1; min-width: 100px; text-align: center; border: 1px solid #ddd;">
-                                    <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">${dateLabel}</div>
-                                    <div style="font-size: 1.5em; margin: 5px 0;">${getWeatherIcon(data.daily.weather_code[index]).split(' ')[0]}</div>
-                                    <div style="font-size: 0.9em;">
-                                        <span style="color: #e74c3c;">${data.daily.temperature_2m_max[index]}°</span> / 
-                                        <span style="color: #3498db;">${data.daily.temperature_2m_min[index]}°</span>
-                                    </div>
-                                    <div style="font-size: 0.8em; color: #555;">${getWeatherIcon(data.daily.weather_code[index]).split(' ')[1]}</div>
-                                </div>
-                            `;
-                            widget.innerHTML += html;
-                        });
-                    })
-                    .catch(error => {
-                        document.getElementById('weather-widget').innerText = '天気の取得に失敗しました。';
-                        console.error('Weather API Error:', error);
+                        widget.innerHTML += html;
                     });
-            })();
-        </script>
-    </div>
+                })
+                .catch(e => console.error(e));
+        })();
 
-    <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-        <h3>🗺️ マップ (Map)</h3>
-        <p>今回のスポット（10ヶ所）をピン留めしました。拡大・縮小して場所を確認できます。</p>
-        <div id="map"></div>
-        <script>
-            var map = L.map('map');
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
+        // Map Logic
+        var map = L.map('map');
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
 
-            var spots = [
-                { name: "若葉旅館", lat: 38.913839, lon: 139.836168, desc: "宿泊先" },
-                { name: "南洲神社", lat: 38.889773, lon: 139.824351, desc: "西郷隆盛を祀る神社" },
-                { name: "黒森歌舞伎 (日枝神社)", lat: 38.84661, lon: 139.81711, desc: "歌舞伎会場(2/15)" },
-                { name: "山居倉庫", lat: 38.91139, lon: 139.836806, desc: "酒田のシンボル" },
-                { name: "海向寺 (即身仏)", lat: 38.91921, lon: 139.83043, desc: "即身仏拝観" },
-                { name: "日和山公園", lat: 38.9190, lon: 139.8280, desc: "六角灯台" },
-                { name: "本間家旧本邸", lat: 38.9147, lon: 139.8395, desc: "豪商の屋敷" },
-                { name: "相馬樓", lat: 38.9194, lon: 139.8333, desc: "舞娘茶屋" },
-                { name: "わだち", lat: 38.9176, lon: 139.8364, desc: "夕食候補(ステーキ)" },
-                { name: "井筒", lat: 38.9176, lon: 139.8354, desc: "夕食 (18:30予約)" },
-                { name: "香梅咲", lat: 38.9195, lon: 139.8330, desc: "ランチ候補" },
-                { name: "土門拳記念館", lat: 38.8953, lon: 139.8169, desc: "谷口吉生建築×写真" },
-                { name: "浄福寺 (唐門)", lat: 38.9185, lon: 139.8315, desc: "本間家寄進の門" }
-            ];
+        var spots = [
+            { name: "若葉旅館", lat: 38.913839, lon: 139.836168, desc: "宿泊先" },
+            { name: "南洲神社", lat: 38.889773, lon: 139.824351, desc: "西郷隆盛を祀る神社" },
+            { name: "黒森歌舞伎", lat: 38.84661, lon: 139.81711, desc: "2/15 会場" },
+            { name: "山居倉庫", lat: 38.91139, lon: 139.836806, desc: "酒田のシンボル" },
+            { name: "海向寺", lat: 38.91921, lon: 139.83043, desc: "即身仏拝観" },
+            { name: "日和山公園", lat: 38.9190, lon: 139.8280, desc: "六角灯台" },
+            { name: "本間家旧本邸", lat: 38.9147, lon: 139.8395, desc: "豪商の屋敷" },
+            { name: "相馬樓", lat: 38.9194, lon: 139.8333, desc: "舞娘茶屋" },
+            { name: "わだち", lat: 38.9176, lon: 139.8364, desc: "夕食候補" },
+            { name: "井筒", lat: 38.9176, lon: 139.8354, desc: "夕食(予約済)" },
+            { name: "香梅咲", lat: 38.9195, lon: 139.8330, desc: "ランチ候補" },
+            { name: "土門拳記念館", lat: 38.8953, lon: 139.8169, desc: "谷口吉生建築" },
+            { name: "浄福寺", lat: 38.9185, lon: 139.8315, desc: "唐門" }
+        ];
 
-            var markerGroup = L.featureGroup();
-            var cityGroup = L.featureGroup(); // 市街地のみのグループ（初期表示用）
+        var markerGroup = L.featureGroup();
+        var cityGroup = L.featureGroup();
 
-            spots.forEach(function (spot) {
-                var marker = L.marker([spot.lat, spot.lon])
-                    .bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
-                marker.addTo(markerGroup);
-
-                // 黒森歌舞伎（遠い場所）以外をcityGroupに入れる
-                if (spot.name.indexOf("黒森歌舞伎") === -1) {
-                    marker.addTo(cityGroup);
-                }
-            });
-            markerGroup.addTo(map);
-
-            // 市街地のスポットだけが収まるようにズーム（黒森は除外して拡大表示）
-            map.fitBounds(cityGroup.getBounds(), { padding: [50, 50] });
-        </script>
-        <p class="note" style="font-size: 0.9em; margin-top: 10px;">
-            <a href="map_data.kml" download>💾 Googleマップ用データ(KML)をダウンロード</a><br>
-            (Googleマイマップに取り込みたい場合はこちら)
-        </p>
-    </div>
-
-    <h2>1. 基本情報</h2>
-    <ul>
-        <li><strong>日程</strong>: 2026年2月14日(土) 〜 2月16日(月)</li>
-        <li><strong>目的地</strong>: 山形県酒田市・庄内エリア</li>
-        <li><strong>目的</strong>: 黒森歌舞伎鑑賞、酒田散策、現地の方との交流</li>
-        <li><strong>宿泊先</strong>: 若葉旅館 (酒田市) <a href="https://www.google.com/maps/search/?api=1&query=山形県酒田市本町2-3-9"
-                target="_blank">📍Map</a></li>
-    </ul>
-
-    <h2>2. スケジュール</h2>
-
-    <h3>Day 1: 2/14(土)</h3>
-    <ul>
-        <li><strong>12:25</strong> 羽田発 (ANA1071) -> <strong>13:25</strong> 庄内着</li>
-        <li><strong>空港リムジンバス</strong> (到着に合わせて運行/約10分後発)<br>
-            <span class="note">→ 行き先: 酒田方面 / 下車: <strong>酒田市役所前</strong> (約35分 / 810円)</span><br>
-            <span class="note">→ 下車後、徒歩約4分 (300m)</span>
-        </li>
-        <li><strong>14:15頃</strong> 若葉旅館チェックイン</li>
-        <li>山居倉庫・周辺散策</li>
-        <li><strong>18:30 夕食: 井筒 (Izutsu)</strong> <span class="highlight">予約済</span><br>
-            <span class="note">予算: 5,000〜6,000円 / <a href="https://izutsu01.com/about"
-                    target="_blank">Web</a></span><br>
-            <span class="note">〒998-0044 山形県酒田市中町2-3-27</span>
-        </li>
-    </ul>
-
-    <h3>Day 2: 2/15(日)</h3>
-    <ul>
-        <li><strong>朝食</strong>: 朝ラーメン（要確認）</li>
-        <li><strong>10:00〜 黒森歌舞伎鑑賞</strong>
-            <ul>
-                <li>場所：黒森日枝神社</li>
-                <li>昼食：お弁当あり</li>
-                <li>※防寒対策必須</li>
-            </ul>
-        </li>
-        <li><strong>16:00〜18:00頃 直会（なおらい）</strong>
-            <ul>
-                <li>舞台上での打ち上げに参加（車座での交流）</li>
-            </ul>
-        </li>
-        <li>18:00すぎ: 酒田市街へ戻る</li>
-    </ul>
-
-    <h3>Day 3: 2/16(月)</h3>
-    <ul>
-        <li>終日フリー（ランチ候補：香梅咲？）</li>
-        <li><strong>帰路の移動 (Flight: 17:40発)</strong>
-            <ul>
-                <li>目安: 17:00頃には空港着</li>
-                <li>【バス】16:00頃 酒田駅前発 (約40分)</li>
-                <li>【タクシー】16:30頃 出発 (約30-40分)</li>
-            </ul>
-        </li>
-        <li><strong>17:40</strong> 庄内空港発 (ANA400) -> <strong>18:45</strong> 羽田着</li>
-    </ul>
-
-    <h2>3. 歴史と見立ての視点 (Historical Perspectives & Spots)</h2>
-    <p>単なる観光スポット巡りではなく、4つの「歴史的視点」から酒田を読み解くための整理です。</p>
-
-    <div style="margin-bottom: 25px;">
-        <h3 style="color: #2c3e50; border-bottom: 2px solid #8b4513;">視点1：自然と古代の知恵 (Nature & Ancient Wisdom)</h3>
-        <p>酒田周辺（八森遺跡等）は縄文時代から人が住み続けてきた場所。海と川の恵みと共に生きる知恵が、近代の建築にも息づいています。</p>
-        <ul>
-            <li><strong>山居倉庫</strong>: <a href="https://www.google.com/maps/search/?api=1&query=山居倉庫"
-                    target="_blank">📍Map</a><br>
-                100年以上現役を続ける米倉庫。二重屋根構造と背後のケヤキ並木が生み出す「天然の空調システム」は、現代にも通じるサステナブルな知恵。<br>
-
-            </li>
-        </ul>
-    </div>
-
-    <div style="margin-bottom: 25px;">
-        <h3 style="color: #2c3e50; border-bottom: 2px solid #8b4513;">視点2：北前船の繁栄と京文化 (Prosperity & Culture)</h3>
-        <p>「西の堺、東の酒田」と謳われた時代。北前船が運んだのは物資だけでなく、上方（京都・大阪）の雅な文化でした。</p>
-        <ul>
-            <li><strong>旧鐙屋 (Abumiya)</strong>: <a href="https://www.google.com/maps/search/?api=1&query=旧鐙屋"
-                    target="_blank">📍Map</a><br>
-                井原西鶴「日本永代蔵」にも登場する廻船問屋。当時の繁栄ぶりそのままの建築。</li>
-            <li><strong>相馬樓 (Somaro)</strong>: <br>
-                かつての料亭「相馬屋」。北前船がもたらした京文化の粋、舞娘（まいこ）文化が色濃く残る場所。<br>
-
-            </li>
-            <li><strong>日和山公園</strong>: <a href="https://www.google.com/maps/search/?api=1&query=日和山公園+酒田"
-                    target="_blank">📍Map</a><br>
-                千石船（1/2模型）や日本最古級の木造六角灯台があり、港町の記憶を一望できる。</li>
-        </ul>
-    </div>
-
-    <div style="margin-bottom: 25px;">
-        <h3 style="color: #2c3e50; border-bottom: 2px solid #8b4513;">視点3：武士の精神と西郷隆盛 (Samurai Spirit & Reconciliation)
-        </h3>
-        <p>戊辰戦争時、庄内藩は幕府側につき、本間家も財政面でこれを支えました。しかし、戦後処理にあたった<strong>西郷隆盛</strong>は、敗者に対し極めて寛大な措置を取りました。<br>
-            この「徳」に深く感銘を受けた庄内の人々との間に、敵味方を超えた深い絆が生まれました。</p>
-        <ul>
-            <li><strong>本間家旧本邸</strong>: <a href="https://www.google.com/maps/search/?api=1&query=本間家旧本邸"
-                    target="_blank">📍Map</a><br>
-                庄内藩を支えた日本一の地主。武家造り（藩主などの迎賓用）と商家造りが一体となった非常に珍しい建築構造。<br>
-
-            </li>
-            <li><strong>南洲神社</strong>: <a href="https://www.google.com/maps/search/?api=1&query=南洲神社+酒田"
-                    target="_blank">📍Map</a><br>
-                西郷隆盛（南洲翁）を祀る神社。敵将であった西郷を慕い、その遺訓を後世に伝えるために建立された「和解と敬意」の象徴。</li>
-        </ul>
-    </div>
-
-    <div style="margin-bottom: 25px;">
-        <h3 style="color: #2c3e50; border-bottom: 2px solid #8b4513;">視点番外編：リアリズムとモダニズム (Realism & Modernism)</h3>
-        <p>酒田が輩出した世界的写真家・土門拳。彼の「絶対非演出の絶対スナップ」というリアリズムと、それを収める谷口吉生の静謐なモダニズム建築の対比。</p>
-        <ul>
-            <li><strong>土門拳記念館</strong>: <a href="https://www.google.com/maps/search/?api=1&query=土門拳記念館"
-                    target="_blank">📍Map</a><br>
-                飯森山公園の景観に溶け込むように設計された名建築。中庭にはイサム・ノグチの彫刻、庭園は勅使河原宏。芸術家たちの「気」が交錯する場所。<br>
-                <br>
-                <span class="note">※市街地から少し離れるため、タクシー移動(15分程度)推奨。</span>
-            </li>
-        </ul>
-    </div>
-
-    <div style="margin-bottom: 25px;">
-        <h3 style="color: #2c3e50; border-bottom: 2px solid #8b4513;">深掘り：寺町と豪商のパトロネージュ (Teramachi & Patronage)</h3>
-        <p>酒田の寺町（台町周辺）には寺院が密集しています。これは単なる信仰心だけでなく、豪商たちが競って寄進を行うことで自らの財力と文化度を示した「パトロネージュ（支援）」の証でもあります。</p>
-        <ul>
-            <li><strong>浄福寺の唐門</strong>: 本間家三代・光丘が寄進。京都・西本願寺の唐門を模したとも言われる精緻な彫刻が見どころ。</li>
-            <li><strong>海晏寺 (Kaenji)</strong>: 三重塔があり、ここも本間家の寄進によるもの。</li>
-        </ul>
-
-        <div style="margin-bottom: 25px;">
-            <h3 style="color: #2c3e50; border-bottom: 2px solid #8b4513;">視点4：極限の信仰 (Ultimate Faith)</h3>
-            <ul>
-                <li><strong>海向寺 (即身仏)</strong>: <a href="https://www.google.com/maps/search/?api=1&query=海向寺+酒田"
-                        target="_blank">📍Map</a><br>
-                    飢饉や病苦から人々を救うため、自らの体を捧げた僧侶たちの姿（即身仏）が2体祀られている。</li>
-            </ul>
-        </div>
-
-        <h2>5. 予算目安</h2>
-        <table>
-            <tr>
-                <th>項目</th>
-                <th>内訳</th>
-            </tr>
-            <tr>
-                <td>交通費</td>
-                <td>飛行機往復 18,500円 (確定) + 現地タクシー等</td>
-            </tr>
-            <tr>
-                <td>宿泊費</td>
-                <td>若葉旅館 2泊 (約14,600円)</td>
-            </tr>
-            <tr>
-                <td>イベント費</td>
-                <td>歌舞伎席・解説等 (7,000円)</td>
-            </tr>
-            <tr>
-                <td>食費等</td>
-                <td>
-                    Day1夕(井筒): 約6,000円<br>
-                    Day3ラン(香梅咲?): 約3,500円<br>
-                    その他(Day2夕/カフェ等): 約10,000円
-                </td>
-            </tr>
-            <tr>
-                <th>合計目安</th>
-                <th>約 55,000円 〜 65,000円</th>
-            </tr>
-        </table>
-
+        spots.forEach(function (spot) {
+            var marker = L.marker([spot.lat, spot.lon]).bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
+            marker.addTo(markerGroup);
+            if (spot.name.indexOf("黒森歌舞伎") === -1) marker.addTo(cityGroup);
+        });
+        markerGroup.addTo(map);
+        map.fitBounds(cityGroup.getBounds(), { padding: [30, 30] });
+    </script>
 </body>
 
 </html>
