@@ -649,7 +649,9 @@
             { name: "井筒", lat: 38.9176, lon: 139.8354, desc: "夕食(予約済)" },
             { name: "香梅咲", lat: 38.9195, lon: 139.8330, desc: "ランチ候補" },
             { name: "土門拳記念館", lat: 38.8953, lon: 139.8169, desc: "谷口吉生建築" },
-            { name: "浄福寺", lat: 38.9185, lon: 139.8315, desc: "唐門" }
+            { name: "浄福寺", lat: 38.9185, lon: 139.8315, desc: "唐門" },
+            { name: "羽黒山 五重塔", lat: 38.704606, lon: 139.967819, desc: "国宝・爺杉" },
+            { name: "羽黒山 山頂", lat: 38.705639, lon: 139.983950, desc: "三神合祭殿・斎館" }
         ];
 
         var markerGroup = L.featureGroup();
@@ -658,7 +660,10 @@
         spots.forEach(function (spot) {
             var marker = L.marker([spot.lat, spot.lon]).bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
             marker.addTo(markerGroup);
-            if (spot.name.indexOf("黒森歌舞伎") === -1) marker.addTo(cityGroup);
+            // 酒田市街地のみを初期表示（黒森・羽黒山は除外）
+            if (spot.name.indexOf("黒森歌舞伎") === -1 && spot.name.indexOf("羽黒山") === -1) {
+                marker.addTo(cityGroup);
+            }
         });
         markerGroup.addTo(map);
         map.fitBounds(cityGroup.getBounds(), { padding: [30, 30] });
