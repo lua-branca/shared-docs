@@ -92,11 +92,86 @@
     <h1>旅の計画：山形（酒田・庄内）</h1>
 
     <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <h3>🌦️ 現在の天気と予報 (Sakata, Yamagata)</h3>
+
+        <div id="weather-widget"
+            style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-around; margin-top: 15px;">
+            <div style="text-align: center; width: 100%;">Loading weather...</div>
+        </div>
+
+        <script>
+            (function () {
+                const lat = 38.9138;
+                const lon = 139.8362;
+                const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=3`;
+
+                const weatherCodes = {
+                    0: '☀️ 快晴',
+                    1: '🌤️ 晴れ', 2: '⛅️ 一部曇', 3: '☁️ 曇り',
+                    45: '🌫️ 霧', 48: '🌫️ 霧',
+                    51: '🌧️ 小雨', 53: '🌧️ 小雨', 55: '🌧️ 小雨',
+                    61: '☔️ 雨', 63: '☔️ 雨', 65: '☔️ 雨',
+                    71: '☃️ 雪', 73: '☃️ 雪', 75: '☃️ 雪',
+                    77: '☃️ 霧雪',
+                    80: '🌦️ にわか雨', 81: '🌦️ にわか雨', 82: '🌦️ にわか雨',
+                    85: '🌨️ にわか雪', 86: '🌨️ にわか雪',
+                    95: '⚡️ 雷雨', 96: '⚡️ 雷雨', 99: '⚡️ 雷雨'
+                };
+
+                function getWeatherIcon(code) {
+                    return weatherCodes[code] || '❓ 不明';
+                }
+
+                function formatDate(dateStr) {
+                    const d = new Date(dateStr);
+                    return `${d.getMonth() + 1}/${d.getDate()}`;
+                }
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const widget = document.getElementById('weather-widget');
+                        widget.innerHTML = ''; // Clear loading text
+
+                        // Current Weather
+                        const currentHtml = `
+                            <div style="background: #fff; padding: 15px; border-radius: 8px; flex: 1; min-width: 140px; text-align: center; border: 2px solid #ddd;">
+                                <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">現在 (Live)</div>
+                                <div style="font-size: 2em; margin: 5px 0;">${data.current.temperature_2m}°C</div>
+                                <div style="font-weight: bold;">${getWeatherIcon(data.current.weather_code)}</div>
+                            </div>
+                        `;
+                        widget.innerHTML += currentHtml;
+
+                        // Daily Forecast (3 Days)
+                        data.daily.time.forEach((time, index) => {
+                            const dateLabel = index === 0 ? '今日' : (index === 1 ? '明日' : formatDate(time));
+                            const html = `
+                                <div style="background: #fff; padding: 10px; border-radius: 8px; flex: 1; min-width: 100px; text-align: center; border: 1px solid #ddd;">
+                                    <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">${dateLabel}</div>
+                                    <div style="font-size: 1.5em; margin: 5px 0;">${getWeatherIcon(data.daily.weather_code[index]).split(' ')[0]}</div>
+                                    <div style="font-size: 0.9em;">
+                                        <span style="color: #e74c3c;">${data.daily.temperature_2m_max[index]}°</span> / 
+                                        <span style="color: #3498db;">${data.daily.temperature_2m_min[index]}°</span>
+                                    </div>
+                                    <div style="font-size: 0.8em; color: #555;">${getWeatherIcon(data.daily.weather_code[index]).split(' ')[1]}</div>
+                                </div>
+                            `;
+                            widget.innerHTML += html;
+                        });
+                    })
+                    .catch(error => {
+                        document.getElementById('weather-widget').innerText = '天気の取得に失敗しました。';
+                        console.error('Weather API Error:', error);
+                    });
+            })();
+        </script>
+    </div>
+
+    <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
         <h3>🗺️ マップ (Map)</h3>
         <p>今回のスポット（10ヶ所）をピン留めしました。拡大・縮小して場所を確認できます。</p>
-
         <div id="map"></div>
-
         <script>
             var map = L.map('map');
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -138,7 +213,6 @@
             // 市街地のスポットだけが収まるようにズーム（黒森は除外して拡大表示）
             map.fitBounds(cityGroup.getBounds(), { padding: [50, 50] });
         </script>
-
         <p class="note" style="font-size: 0.9em; margin-top: 10px;">
             <a href="map_data.kml" download>💾 Googleマップ用データ(KML)をダウンロード</a><br>
             (Googleマイマップに取り込みたい場合はこちら)
