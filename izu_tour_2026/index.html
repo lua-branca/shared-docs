@@ -397,6 +397,48 @@
             .timeline {
                 padding-left: 0;
             }
+            .resources-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-top: 1.5rem;
+            }
+            .resource-card {
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 1.5rem;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            }
+            .resource-card h4 {
+                color: var(--primary-color);
+                margin-top: 0;
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .resource-card ul {
+                list-style: none;
+                padding-left: 0;
+                margin: 0;
+            }
+            .resource-card li {
+                margin-bottom: 0.8rem;
+                font-size: 0.95rem;
+            }
+            .resource-card a {
+                color: var(--text-color);
+                text-decoration: none;
+                border-bottom: 1px solid var(--accent-color);
+                transition: color 0.2s, border-color 0.2s;
+            }
+            .resource-card a:hover {
+                color: var(--accent-color);
+                border-color: var(--primary-color);
+            }
         }
     </style>
 </head>
@@ -670,6 +712,39 @@
                 <li><strong>服装・靴について:</strong> 雲見浅間神社の参道など、階段や岩場を登る箇所がございます。歩きやすく、滑りにくいスニーカーやトレッキングシューズでのご参加を強く推奨いたします。</li>
                 <li><strong>天候の影響について:</strong> ペトログリフ調査、夕日調査、ホタル鑑賞などは当日の天候状況によりスケジュール変更または中止となる可能性がございます。あらかじめご了承ください。</li>
             </ul>
+        </div>
+
+        <h2 class="section-title">🔗 お役立ち情報 & リンク</h2>
+        <div class="resources-grid">
+            <!-- Weather Forecasts -->
+            <div class="resource-card">
+                <h4>☀️ 現地の天気予報</h4>
+                <ul>
+                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/14/4610/14384.html" target="_blank">神奈川県 真鶴町の天気 (Yahoo!天気)</a></li>
+                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/22/5020/22305.html" target="_blank">静岡県 松崎町の天気 (宿・西伊豆)</a></li>
+                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/22/5020/22220.html" target="_blank">静岡県 下田市の天気 (東伊豆・恵比須島)</a></li>
+                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/22/5010/22206.html" target="_blank">静岡県 三島市の天気 (最終日)</a></li>
+                </ul>
+            </div>
+
+            <!-- YouTube Pre-watch -->
+            <div class="resource-card">
+                <h4>🎬 事前学習おすすめ動画</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+                    ツアーの背景にある「三宅記」や「海洋民族」の知識を深めるためのTOLAND VLOG公式動画リストです。
+                </p>
+                <ul>
+                    <li>・ <a href="https://www.youtube.com/playlist?list=PLrd0S07H_Wx7yPB3fMVC1GqcfdWHeJLnH" target="_blank">TOLAND VLOG 伊豆ロケ・三宅記シリーズ (YouTube再生リスト)</a></li>
+                </ul>
+            </div>
+
+            <!-- Solstice Info -->
+            <div class="resource-card">
+                <h4>🌅 夏至の夕日調査メモ</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+                    6月中旬（夏至付近）の伊豆の日没は<strong>19:00頃</strong>です。太陽は真西からさらに<strong>約30度北寄り（北西方向）</strong>へ沈みます。天候に恵まれれば、遮るもののない駿河湾にゆっくりと沈む幻想的な夕日と、そのレイラインを実地検証できます。
+                </p>
+            </div>
         </div>
     </main>
 
