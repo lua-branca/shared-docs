@@ -181,6 +181,68 @@
             z-index: 1;
         }
 
+        /* Global High Contrast Link Styles */
+        a {
+            color: #58d8ff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(88, 216, 255, 0.4);
+            transition: color 0.2s, border-color 0.2s;
+            font-weight: 700;
+        }
+
+        a:hover {
+            color: #ffd700;
+            border-bottom-color: #ffd700;
+            text-decoration: none;
+        }
+
+        .address {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        /* Day Weather Strip Styles */
+        .day-weather-strip {
+            background: rgba(72, 202, 228, 0.08);
+            border: 1px solid rgba(72, 202, 228, 0.2);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .day-weather-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .day-weather-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        
+        .day-weather-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+        
+        .day-weather-temp {
+            font-family: var(--font-eng);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
         /* Tabs styling */
         .day-tabs {
             display: flex;
@@ -315,66 +377,6 @@
             margin-bottom: 1rem;
         }
 
-        .address {
-            font-size: 0.85rem;
-            color: var(--primary-color);
-        }
-
-        /* Global High Contrast Link Styles */
-        a {
-            color: #58d8ff;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(88, 216, 255, 0.4);
-            transition: color 0.2s, border-color 0.2s;
-            font-weight: 700;
-        }
-
-        a:hover {
-            color: #ffd700;
-            border-bottom-color: #ffd700;
-            text-decoration: none;
-        }
-
-        /* Day Weather Strip Styles */
-        .day-weather-strip {
-            background: rgba(72, 202, 228, 0.08);
-            border: 1px solid rgba(72, 202, 228, 0.2);
-            border-radius: 12px;
-            padding: 0.8rem 1.2rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-        }
-        
-        .day-weather-info {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .day-weather-title {
-            color: var(--primary-color);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        
-        .day-weather-icon {
-            font-size: 1.6rem;
-            line-height: 1;
-        }
-        
-        .day-weather-temp {
-            font-family: var(--font-eng);
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
         .drive-info {
             color: var(--accent-color);
             font-size: 0.85rem;
@@ -407,6 +409,43 @@
             margin-bottom: 0.5rem;
         }
 
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .resource-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .resource-card ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .resource-card li {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
         footer {
             text-align: center;
             padding: 3rem 1.5rem;
@@ -416,6 +455,32 @@
             border-top: 1px solid var(--border-color);
             margin-top: 4rem;
             letter-spacing: 0.05em;
+        }
+
+        /* Numbered Marker Icons for Leaflet Map */
+        .map-number-icon {
+            background-color: var(--primary-color);
+            color: #0b132b;
+            border: 2px solid var(--text-color);
+            border-radius: 50%;
+            width: 28px !important;
+            height: 28px !important;
+            margin-left: -14px !important;
+            margin-top: -14px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: var(--font-eng);
+            font-size: 13px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .map-number-icon:hover {
+            transform: scale(1.2) !important;
+            background-color: var(--accent-color);
+            color: #0b132b;
+            cursor: pointer;
         }
 
         @media (max-width: 768px) {
@@ -441,39 +506,6 @@
             .timeline {
                 padding-left: 0;
             }
-            .resources-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1.5rem;
-                margin-top: 1.5rem;
-            }
-            .resource-card {
-                background: var(--card-bg);
-                border: 1px solid var(--border-color);
-                border-radius: 12px;
-                padding: 1.5rem;
-                backdrop-filter: blur(10px);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            }
-            .resource-card h4 {
-                color: var(--primary-color);
-                margin-top: 0;
-                margin-bottom: 1rem;
-                font-size: 1.1rem;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            .resource-card ul {
-                list-style: none;
-                padding-left: 0;
-                margin: 0;
-            }
-            .resource-card li {
-                margin-bottom: 0.8rem;
-                font-size: 0.95rem;
-            }
-            /* Resource cards inherit the global high contrast link styles */
         }
     </style>
 </head>
@@ -482,7 +514,7 @@
 
     <header>
         <h1>伊豆半島・超古代海洋民族のルーツを辿る旅</h1>
-        <div class="subtitle">日本神話の舞台と縄文の暮らし、夏至の夕陽を体感する3日間</div>
+        <div class="subtitle">日本神話の舞台と縄文 of 暮らし、夏至 of 夕陽を体感する3日間</div>
     </header>
 
     <main>
@@ -787,19 +819,26 @@
 
     <!-- Leaflet Configuration Script -->
     <script>
-        // Set coordinates for all locations
+        // Set coordinates for all locations with sequence numbers and days
         const spots = [
-            { name: "JR 真鶴駅 (集合)", lat: 35.1565, lon: 139.1328, desc: "Day 1 10:00 集合" },
-            { name: "真鶴岬の遺跡 (三ツ石)", lat: 35.1388, lon: 139.1557, desc: "Day 1 10:15 海洋民族の痕跡" },
-            { name: "Lighthouse yuragi (宿)", lat: 34.7340, lon: 138.7925, desc: "松崎町岩科 宿泊場所" },
-            { name: "白濱神社", lat: 34.6934, lon: 138.9739, desc: "Day 2 10:00 伊豆最古の宮" },
-            { name: "恵比須島", lat: 34.6657, lon: 138.9715, desc: "Day 2 11:00 古代神殿の面影" },
-            { name: "雲見浅間神社", lat: 34.6901, lon: 138.7495, desc: "Day 2 14:00 烏帽子山絶景" },
-            { name: "西伊豆の夕日スポット", lat: 34.7554, lon: 138.7735, desc: "Day 2 18:00 夏至の夕日調査" },
-            { name: "室岩洞", lat: 34.7347, lon: 138.7611, desc: "Day 3 11:00 地下石切場跡" },
-            { name: "道の駅 花の三聖苑伊豆松崎", lat: 34.7617, lon: 138.8252, desc: "Day 3 13:30 お土産・休憩" },
-            { name: "三嶋大社", lat: 35.1221, lon: 138.9178, desc: "Day 3 15:30 伊豆国一宮" },
-            { name: "JR 三島駅 (解散)", lat: 35.1264, lon: 138.9110, desc: "Day 3 17:00 解散場所" }
+            // Day 1
+            { id: 1, day: 1, name: "① JR 真鶴駅", lat: 35.1565, lon: 139.1328, desc: "Day 1 10:00 集合" },
+            { id: 2, day: 1, name: "② 真鶴岬の遺跡 (三ツ石)", lat: 35.1388, lon: 139.1557, desc: "Day 1 10:15 海洋民族の痕跡" },
+            { id: 3, day: 1, name: "③ Lighthouse yuragi (宿)", lat: 34.7340, lon: 138.7925, desc: "松崎町岩科 宿泊場所" },
+
+            // Day 2
+            { id: 3, day: 2, name: "③ Lighthouse yuragi (宿)", lat: 34.7340, lon: 138.7925, desc: "松崎町岩科 宿泊場所" },
+            { id: 4, day: 2, name: "④ 白濱神社", lat: 34.6934, lon: 138.9739, desc: "Day 2 10:00 伊豆最古の宮" },
+            { id: 5, day: 2, name: "⑤ 恵比須島", lat: 34.6657, lon: 138.9715, desc: "Day 2 11:00 古代神殿の面影" },
+            { id: 6, day: 2, name: "⑥ 雲見浅間神社", lat: 34.6901, lon: 138.7495, desc: "Day 2 14:00 烏帽子山絶景" },
+            { id: 7, day: 2, name: "⑦ 西伊豆の夕日スポット", lat: 34.7554, lon: 138.7735, desc: "Day 2 18:00 夏至の夕日調査" },
+
+            // Day 3
+            { id: 3, day: 3, name: "③ Lighthouse yuragi (宿)", lat: 34.7340, lon: 138.7925, desc: "松崎町岩科 宿泊場所" },
+            { id: 8, day: 3, name: "⑧ 室岩洞", lat: 34.7347, lon: 138.7611, desc: "Day 3 11:00 地下石切場跡" },
+            { id: 9, day: 3, name: "⑨ 道の駅 花の三聖苑伊豆松崎", lat: 34.7617, lon: 138.8252, desc: "Day 3 13:30 お土産・休憩" },
+            { id: 10, day: 3, name: "⑩ 三嶋大社", lat: 35.1221, lon: 138.9178, desc: "Day 3 15:30 伊豆国一宮" },
+            { id: 11, day: 3, name: "⑪ JR 三島駅 (解散)", lat: 35.1264, lon: 138.9110, desc: "Day 3 17:00 解散" }
         ];
 
         // Initialize Map
@@ -811,18 +850,53 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         }).addTo(map);
 
-        const markerGroup = L.featureGroup();
+        // Store Leaflet objects by day to toggle/focus
+        const dayMarkers = { 1: [], 2: [], 3: [] };
+        const dayPolylines = { 1: null, 2: null, 3: null };
+        const dayColors = {
+            1: '#e0a96d', // Gold
+            2: '#48cae4', // Cyan
+            3: '#ff6b6b'  // Coral/Red
+        };
 
-        // Custom style markers or standard markers
-        spots.forEach(function (spot) {
-            const marker = L.marker([spot.lat, spot.lon])
+        // Create Numbered Marker function
+        function createNumberedMarker(spot) {
+            const numIcon = L.divIcon({
+                className: 'map-number-icon',
+                html: spot.id,
+                iconSize: [28, 28]
+            });
+            
+            const marker = L.marker([spot.lat, spot.lon], { icon: numIcon })
                 .bindPopup(`<strong style="color: #0b132b;">${spot.name}</strong><br><span style="color: #555;">${spot.desc}</span>`);
-            marker.addTo(markerGroup);
-            marker.addTo(map);
-        });
+            
+            return marker;
+        }
 
-        // Fit map bounds to show all markers
-        map.fitBounds(markerGroup.getBounds(), { padding: [50, 50] });
+        // Initialize markers and lines
+        [1, 2, 3].forEach(dayNum => {
+            const daySpots = spots.filter(s => s.day === dayNum);
+            const latLons = [];
+
+            // Add markers
+            daySpots.forEach(spot => {
+                const marker = createNumberedMarker(spot);
+                marker.addTo(map);
+                dayMarkers[dayNum].push(marker);
+                latLons.push([spot.lat, spot.lon]);
+            });
+
+            // Draw chronological route line (polyline)
+            if (latLons.length > 1) {
+                const polyline = L.polyline(latLons, {
+                    color: dayColors[dayNum],
+                    weight: 4,
+                    opacity: 0.8,
+                    dashArray: '5, 10' // Dashed line for clean route look
+                }).addTo(map);
+                dayPolylines[dayNum] = polyline;
+            }
+        });
 
         // Tab Switch logic
         function switchDay(dayNum) {
@@ -841,7 +915,36 @@
                     btn.classList.remove('active');
                 }
             });
+
+            // Focus map on selected day's route!
+            focusMapOnDay(dayNum);
         }
+
+        // Helper to focus map and highlight path
+        function focusMapOnDay(dayNum) {
+            const daySpots = spots.filter(s => s.day === dayNum);
+            if (daySpots.length === 0) return;
+
+            const latLons = daySpots.map(s => [s.lat, s.lon]);
+            map.fitBounds(L.latLngBounds(latLons), { padding: [60, 60], maxZoom: 13 });
+
+            // Highlight active day line, dim other day lines
+            [1, 2, 3].forEach(d => {
+                const polyline = dayPolylines[d];
+                if (polyline) {
+                    if (d === dayNum) {
+                        polyline.setStyle({ opacity: 0.9, weight: 6, dashArray: null }); // Solid & thick
+                    } else {
+                        polyline.setStyle({ opacity: 0.25, weight: 3, dashArray: '5, 10' }); // Dim & dashed
+                    }
+                }
+            });
+        }
+
+        // Set initial focus to Day 1 since Tab 1 is active on load
+        setTimeout(() => {
+            focusMapOnDay(1);
+        }, 500);
 
         // Weather Widget Logic
         (function () {
