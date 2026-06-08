@@ -320,17 +320,19 @@
             color: var(--primary-color);
         }
 
-        .address a {
-            color: var(--accent-color);
+        /* Global High Contrast Link Styles */
+        a {
+            color: #58d8ff;
             text-decoration: none;
-            border-bottom: 1px dotted var(--accent-color);
+            border-bottom: 1px solid rgba(88, 216, 255, 0.4);
             transition: color 0.2s, border-color 0.2s;
-            font-weight: 500;
+            font-weight: 700;
         }
 
-        .address a:hover {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+        a:hover {
+            color: #ffd700;
+            border-bottom-color: #ffd700;
+            text-decoration: none;
         }
 
         /* Day Weather Strip Styles */
@@ -471,17 +473,7 @@
                 margin-bottom: 0.8rem;
                 font-size: 0.95rem;
             }
-            .resource-card a {
-                color: var(--accent-color);
-                text-decoration: none;
-                border-bottom: 1px solid rgba(72, 202, 228, 0.4);
-                transition: color 0.2s, border-color 0.2s;
-                font-weight: 500;
-            }
-            .resource-card a:hover {
-                color: var(--primary-color);
-                border-color: var(--primary-color);
-            }
+            /* Resource cards inherit the global high contrast link styles */
         }
     </style>
 </head>
@@ -775,17 +767,6 @@
 
         <h2 class="section-title">🔗 お役立ち情報 & リンク</h2>
         <div class="resources-grid">
-            <!-- Weather Forecasts -->
-            <div class="resource-card">
-                <h4>☀️ 現地の天気予報</h4>
-                <ul>
-                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/14/4610/14384.html" target="_blank">神奈川県 真鶴町の天気 (Yahoo!天気)</a></li>
-                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/22/5020/22305.html" target="_blank">静岡県 松崎町の天気 (宿・西伊豆)</a></li>
-                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/22/5020/22220.html" target="_blank">静岡県 下田市の天気 (東伊豆・恵比須島)</a></li>
-                    <li>・ <a href="https://weather.yahoo.co.jp/weather/jp/22/5010/22206.html" target="_blank">静岡県 三島市の天気 (最終日)</a></li>
-                </ul>
-            </div>
-
             <!-- YouTube Pre-watch -->
             <div class="resource-card">
                 <h4>🎬 事前学習おすすめ動画</h4>
@@ -799,7 +780,7 @@
 
             <!-- Solstice Info -->
             <div class="resource-card">
-                <h4>🌅 夏至の夕日調査メモ</h4>
+                <h4>🌅 夏至 of Sunset 調査メモ</h4>
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
                     6月中旬（夏至付近）の伊豆の日没は<strong>19:00頃</strong>です。太陽は真西からさらに<strong>約30度北寄り（北西方向）</strong>へ沈みます。天候に恵まれれば、遮るもののない駿河湾にゆっくりと沈む幻想的な夕日と、そのレイラインを実地検証できます。
                 </p>
