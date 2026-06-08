@@ -11,6 +11,7 @@ echo "========================================"
 
 git init
 git remote add origin "$REMOTE_URL"
+git checkout -b main 2>/dev/null || git branch -m main
 echo "📡 Fetching history..."
 git fetch --depth=1 origin "$BRANCH"
 git reset --soft "origin/$BRANCH"

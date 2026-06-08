@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>伊豆半島・超古代海洋民族のルーツを辿る旅 2026</title>
+    <!-- Google Fonts: Outfit & Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <style>
+        :root {
+            --bg-color: #0b132b;
+            --card-bg: rgba(27, 38, 59, 0.7);
+            --border-color: rgba(224, 169, 109, 0.3);
+            --primary-color: #e0a96d; /* Warm Gold */
+            --primary-hover: #f0c99d;
+            --accent-color: #48cae4; /* Electric Cyan */
+            --text-color: #f8f9fa;
+            --text-muted: #adb5bd;
+            --font-main: 'Noto Sans JP', sans-serif;
+            --font-eng: 'Outfit', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(27, 38, 59, 0.5) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(27, 79, 114, 0.3) 0px, transparent 50%);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            position: relative;
+            padding: 4rem 1.5rem 3rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(11, 19, 43, 0.9) 0%, rgba(11, 19, 43, 0.4) 100%);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(224, 169, 109, 0.2) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 0.15em;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 30%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-family: var(--font-main);
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-top: 1rem;
+            letter-spacing: 0.08em;
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .tour-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .meta-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .meta-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-value {
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, rgba(27, 38, 59, 0.8) 0%, rgba(11, 19, 43, 0.9) 100%);
+            border: 1px solid var(--primary-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .concept-title {
+            font-family: var(--font-eng);
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .concept-text {
+            font-size: 1.05rem;
+            text-align: justify;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin: 3rem 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+        }
+
+        #map {
+            height: 480px;
+            width: 100%;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        /* Tabs styling */
+        .day-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-main);
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.6rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .day-content {
+            display: none;
+        }
+
+        .day-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            opacity: 0.4;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .time-box {
+            font-family: var(--font-eng);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            padding-top: 0.1rem;
+        }
+
+        .spot-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .spot-content:hover {
+            transform: translateX(5px);
+            border-color: var(--border-color);
+        }
+
+        .spot-content::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 22px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-color);
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 8px var(--primary-color);
+            transition: background 0.3s;
+        }
+
+        .spot-content:hover::before {
+            background: var(--primary-color);
+        }
+
+        .spot-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .spot-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .address {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+        }
+
+        .address a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--primary-color);
+            transition: color 0.2s;
+        }
+
+        .address a:hover {
+            color: var(--primary-hover);
+        }
+
+        .drive-info {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: rgba(72, 202, 228, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-top: 3rem;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .info-box ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            font-family: var(--font-eng);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 3rem 1rem 2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .time-box {
+                padding-left: 0;
+            }
+            .spot-content::before {
+                display: none;
+            }
+            .timeline::before {
+                display: none;
+            }
+            .timeline {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>伊豆半島・超古代海洋民族のルーツを辿る旅</h1>
+        <div class="subtitle">日本神話の舞台と縄文の暮らし、夏至の夕陽を体感する3日間</div>
+    </header>
+
+    <main>
+        <!-- Concept Section -->
+        <div class="concept-box">
+            <span class="concept-title">Outline & Mission</span>
+            <p class="concept-text">
+                超古代海洋民族の痕跡が色濃く残る伊豆半島。今回のツアーは原点に戻り、TOLAND VLOGの動画で紹介された神秘的なスポットをじっくりと巡ります。<br><br>
+                真鶴の古代遺跡から、日本最古の歴史を刻む白濱神社、神殿のような佇まいを見せる恵比須島、そして西伊豆の断崖にそびえる雲見浅間神社へ。さらに、ペトログリフ研究の第一人者である武内一忠氏のメソッドを継承する「ゆら松」氏とともに、夏至の日の入りポイントを追う共同調査を実施。水平線に沈みゆく夕陽の向こうに、古代の海洋民族が何を夢見て何に祈りを捧げたのか、その暮らしと信仰の息吹を五感で感じ取る特別な旅路です。
+            </p>
+        </div>
+
+        <!-- Meta Grid -->
+        <div class="tour-meta">
+            <div class="meta-card">
+                <span class="meta-label">📅 日程</span>
+                <span class="meta-value">2026年6月12日(金)〜14日(日)</span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">🏡 宿泊</span>
+                <span class="meta-value">Lighthouse yuragi<br><small style="color: var(--text-muted)">静岡県賀茂郡松崎町岩科</small></span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">💰 参加費</span>
+                <span class="meta-value">50,000円<br><small style="color: var(--text-muted)">2泊宿泊費・5食付き（朝食各自）</small></span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">👥 定員</span>
+                <span class="meta-value">先着12名様</span>
+            </div>
+        </div>
+
+        <h2 class="section-title">🗺️ ルートマップ</h2>
+        <div id="map"></div>
+
+        <h2 class="section-title">📅 タイムライン & スケジュール</h2>
+        
+        <!-- Day Tabs -->
+        <div class="day-tabs">
+            <button class="tab-btn active" onclick="switchDay(1)">Day 1 (6/12)</button>
+            <button class="tab-btn" onclick="switchDay(2)">Day 2 (6/13)</button>
+            <button class="tab-btn" onclick="switchDay(3)">Day 3 (6/14)</button>
+        </div>
+
+        <!-- Day 1 Content -->
+        <div id="day1" class="day-content active">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-box">10:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">JR 真鶴駅 集合</span>
+                        <p class="spot-desc">旅の始まりは真鶴駅から。車で移動を開始します。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=JR+真鶴駅" target="_blank">📍 神奈川県足柄下郡真鶴町真鶴</a></span>
+                        <div class="drive-info">🚗 移動: 約15分</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">10:15</div>
+                    <div class="spot-content">
+                        <span class="spot-name">真鶴岬の遺跡（三ツ石）</span>
+                        <p class="spot-desc">超古代海洋民族の痕跡とされる巨石や遺跡を調査します。海の先に浮かぶ三ツ石の景観も必見です。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=真鶴岬" target="_blank">📍 神奈川県足柄下郡真鶴町真鶴1175</a></span>
+                        <div class="drive-info">🚗 移動: ランチ会場へ</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">13:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ランチ</span>
+                        <p class="spot-desc">地元の海の幸などを楽しみながら、メンバー間の交流を深めます。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">15:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ペトログリフ調査（状況により）</span>
+                        <p class="spot-desc">周辺に遺された古代の岩面彫刻（ペトログリフ）の痕跡を、状況を見て探索します。</p>
+                        <div class="drive-info">🚗 移動: 西伊豆 松崎へ（約2時間）</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">16:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">宿チェックイン（Lighthouse yuragi）</span>
+                        <p class="spot-desc">西伊豆・松崎町岩科に位置する極上の隠れ家「Lighthouse yuragi」へチェックイン。のんびり旅の旅情を味わいます。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=静岡県賀茂郡松崎町岩科" target="_blank">📍 静岡県賀茂郡松崎町岩科</a></span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">18:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">夕食</span>
+                        <p class="spot-desc">宿にて1日目の直会（夕食会）。古代史トークで盛り上がります。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">20:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ホタル鑑賞</span>
+                        <p class="spot-desc">美しい清流が流れる岩科地区で、この季節ならではの幻想的なホタルの舞いを鑑賞します。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 2 Content -->
+        <div id="day2" class="day-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-box">09:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">出発</span>
+                        <p class="spot-desc">2日目は東伊豆から南伊豆をぐるりと巡ります。</p>
+                        <div class="drive-info">🚗 移動: 約1時間</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">10:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">白濱神社（白浜神社）</span>
+                        <p class="spot-desc">伊豆最古の宮。御社殿や、海上に立つ巨岩の上の鳥居など、海洋民族の確固たる信仰の歴史に触れます。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=白濱神社" target="_blank">📍 静岡県下田市白浜2740</a></span>
+                        <div class="drive-info">🚗 移動: 約20分</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">11:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">恵比須島（古代神殿）</span>
+                        <p class="spot-desc">地層がむき出しになった無人島。平坦な地形や千畳敷など、まるで古代の神殿や祭祀場のような雰囲気を漂わせる島を一周します。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=下田市恵比須島" target="_blank">📍 静岡県下田市須崎</a></span>
+                        <div class="drive-info">🚗 移動: 約15分</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">12:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ランチ</span>
+                        <p class="spot-desc">下田周辺で美味しい海の幸ランチ。</p>
+                        <div class="drive-info">🚗 移動: 約1時間（南伊豆・西伊豆経由）</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">14:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">雲見浅間神社</span>
+                        <p class="spot-desc">標高162mの烏帽子山山頂に佇む神社。過酷な参道を登りきった先には、駿河湾の大パノラマと古代の息吹を感じる絶景が待っています。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=雲見浅間神社" target="_blank">📍 静岡県賀茂郡松崎町雲見386-2</a></span>
+                        <div class="drive-info">🚗 移動: 約20分</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">15:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">宿に帰宿</span>
+                        <p class="spot-desc">宿へ戻り、夕方からの夕日調査に備えて一度休憩します。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">18:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">夏至の夕日調査</span>
+                        <p class="spot-desc">西伊豆の夕日スポットにて、「武内メソッド」を継承するゆら松氏とともに、夏至の時期に太陽がどのポイントに沈むのか実地観測を行います。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">19:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">夕食</span>
+                        <p class="spot-desc">宿に戻り、みんなで夕食を囲みます。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">21:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">帰宿・フリートーク</span>
+                        <p class="spot-desc">2日目の振り返りとフリートーク。古代の日本神話のミステリーについて語り明かしましょう。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 3 Content -->
+        <div id="day3" class="day-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-box">09:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">神社巡り（松崎・西伊豆）</span>
+                        <p class="spot-desc">松崎・西伊豆エリアに残る、古代の信仰が垣間見える知る人ぞ知る神社を訪ねます。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">11:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">室岩洞（石切場）</span>
+                        <p class="spot-desc">江戸時代から昭和半ばまで使われていた地下の伊豆石の石切場跡。迷宮のような地下空間が広がり、当時の人々の営みを体感できます。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=室岩洞" target="_blank">📍 静岡県賀茂郡松崎町道部</a></span>
+                        <div class="drive-info">🚗 移動: 約10分</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">12:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ランチ</span>
+                        <p class="spot-desc">西伊豆ならではのB級グルメや美味しいローカルランチをいただきます。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">13:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">道の駅 花の三聖苑伊豆松崎</span>
+                        <p class="spot-desc">お土産の購入やドライブの小休憩。松崎の歴史や文化を感じられるスポットです。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=花の三聖苑伊豆松崎" target="_blank">📍 静岡県賀茂郡松崎町大沢20-1</a></span>
+                        <div class="drive-info">🚗 移動: 天城越えをして三島へ（約1時間30分）</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">15:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">三嶋大社</span>
+                        <p class="spot-desc">伊豆国一宮。源頼朝が源氏再興を祈願した歴史ある大社。旅の結びの参拝を行い、無事に旅を終えられることに感謝を捧げます。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=三嶋大社" target="_blank">📍 静岡県三島市大宮町2丁目1-5</a></span>
+                        <div class="drive-info">🚗 移動: 約10分</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time-box">17:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">JR 三島駅 解散</span>
+                        <p class="spot-desc">3日間の充実したツアーのすべての旅程を終え、三島駅にて解散します。お気をつけてお帰りください！</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=三島駅" target="_blank">📍 静岡県三島市一番町</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tour Info Alert Box -->
+        <div class="info-box">
+            <h3>⚠️ ツアーに関するご案内と持ち物</h3>
+            <ul>
+                <li><strong>朝食について:</strong> 5食分の食事は含まれていますが、朝食のみ各自でのご準備をお願いいたします。</li>
+                <li><strong>服装・靴について:</strong> 雲見浅間神社の参道など、階段や岩場を登る箇所がございます。歩きやすく、滑りにくいスニーカーやトレッキングシューズでのご参加を強く推奨いたします。</li>
+                <li><strong>天候の影響について:</strong> ペトログリフ調査、夕日調査、ホタル鑑賞などは当日の天候状況によりスケジュール変更または中止となる可能性がございます。あらかじめご了承ください。</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Ancient Maritime Izu Tour Project
+    </footer>
+
+    <!-- Leaflet Configuration Script -->
+    <script>
+        // Set coordinates for all locations
+        const spots = [
+            { name: "JR 真鶴駅 (集合)", lat: 35.1565, lon: 139.1328, desc: "Day 1 10:00 集合" },
+            { name: "真鶴岬の遺跡 (三ツ石)", lat: 35.1388, lon: 139.1557, desc: "Day 1 10:15 海洋民族の痕跡" },
+            { name: "Lighthouse yuragi (宿)", lat: 34.7340, lon: 138.7925, desc: "松崎町岩科 宿泊場所" },
+            { name: "白濱神社", lat: 34.6934, lon: 138.9739, desc: "Day 2 10:00 伊豆最古の宮" },
+            { name: "恵比須島", lat: 34.6657, lon: 138.9715, desc: "Day 2 11:00 古代神殿の面影" },
+            { name: "雲見浅間神社", lat: 34.6901, lon: 138.7495, desc: "Day 2 14:00 烏帽子山絶景" },
+            { name: "西伊豆の夕日スポット", lat: 34.7554, lon: 138.7735, desc: "Day 2 18:00 夏至の夕日調査" },
+            { name: "室岩洞", lat: 34.7347, lon: 138.7611, desc: "Day 3 11:00 地下石切場跡" },
+            { name: "道の駅 花の三聖苑伊豆松崎", lat: 34.7617, lon: 138.8252, desc: "Day 3 13:30 お土産・休憩" },
+            { name: "三嶋大社", lat: 35.1221, lon: 138.9178, desc: "Day 3 15:30 伊豆国一宮" },
+            { name: "JR 三島駅 (解散)", lat: 35.1264, lon: 138.9110, desc: "Day 3 17:00 解散場所" }
+        ];
+
+        // Initialize Map
+        const map = L.map('map').setView([34.90, 138.90], 10);
+        
+        // Beautiful Dark Map Tiles to match premium aesthetics (CartoDB Dark Matter / Voyager)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+
+        const markerGroup = L.featureGroup();
+
+        // Custom style markers or standard markers
+        spots.forEach(function (spot) {
+            const marker = L.marker([spot.lat, spot.lon])
+                .bindPopup(`<strong style="color: #0b132b;">${spot.name}</strong><br><span style="color: #555;">${spot.desc}</span>`);
+            marker.addTo(markerGroup);
+            marker.addTo(map);
+        });
+
+        // Fit map bounds to show all markers
+        map.fitBounds(markerGroup.getBounds(), { padding: [50, 50] });
+
+        // Tab Switch logic
+        function switchDay(dayNum) {
+            // Hide all tab content
+            document.querySelectorAll('.day-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Show selected day content
+            document.getElementById('day' + dayNum).classList.add('active');
+
+            // Toggle active state on buttons
+            document.querySelectorAll('.tab-btn').forEach((btn, index) => {
+                if (index === (dayNum - 1)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
