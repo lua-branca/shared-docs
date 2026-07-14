@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宮城・海人の記憶を辿る旅 2026</title>
+    <!-- Google Fonts: Outfit & Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        :root {
+            --bg-color: #0b132b;
+            --card-bg: rgba(27, 38, 59, 0.7);
+            --border-color: rgba(224, 169, 109, 0.3);
+            --primary-color: #e0a96d;
+            --primary-hover: #f0c99d;
+            --accent-color: #48cae4;
+            --text-color: #f8f9fa;
+            --text-muted: #adb5bd;
+            --font-main: 'Noto Sans JP', sans-serif;
+            --font-eng: 'Outfit', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 10% 20%, rgba(27, 38, 59, 0.5) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(27, 79, 114, 0.3) 0px, transparent 50%);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            position: relative;
+            padding: 4rem 1.5rem 3rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(11, 19, 43, 0.9) 0%, rgba(11, 19, 43, 0.4) 100%);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(224, 169, 109, 0.2) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 0.15em;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 30%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-family: var(--font-main);
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-top: 1rem;
+            letter-spacing: 0.08em;
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .tour-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .meta-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .meta-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-value {
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, rgba(27, 38, 59, 0.8) 0%, rgba(11, 19, 43, 0.9) 100%);
+            border: 1px solid var(--primary-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .concept-title {
+            font-family: var(--font-eng);
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .concept-text {
+            font-size: 1.05rem;
+            text-align: justify;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin: 3rem 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+        }
+
+        #map {
+            height: 480px;
+            width: 100%;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        a {
+            color: #58d8ff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(88, 216, 255, 0.4);
+            transition: color 0.2s, border-color 0.2s;
+            font-weight: 700;
+        }
+
+        a:hover {
+            color: #ffd700;
+            border-bottom-color: #ffd700;
+            text-decoration: none;
+        }
+
+        .address {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        .day-weather-strip {
+            background: rgba(72, 202, 228, 0.08);
+            border: 1px solid rgba(72, 202, 228, 0.2);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .day-weather-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .day-weather-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .day-weather-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .day-weather-temp {
+            font-family: var(--font-eng);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .day-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-main);
+            font-size: 1.05rem;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.6rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .day-content {
+            display: none;
+        }
+
+        .day-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            opacity: 0.4;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .time-box {
+            font-family: var(--font-eng);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary-color);
+            padding-top: 0.1rem;
+        }
+
+        .spot-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .spot-content:hover {
+            transform: translateX(5px);
+            border-color: var(--border-color);
+        }
+
+        .spot-content::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 22px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-color);
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 8px var(--primary-color);
+            transition: background 0.3s;
+        }
+
+        .spot-content:hover::before {
+            background: var(--primary-color);
+        }
+
+        .spot-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .spot-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .drive-info {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .badge {
+            font-family: var(--font-eng);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .badge-done {
+            background: rgba(72, 202, 228, 0.15);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+
+        .badge-check {
+            background: rgba(224, 169, 109, 0.15);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .info-box {
+            background: rgba(72, 202, 228, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-top: 3rem;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .info-box ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .resource-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .resource-card li {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            font-family: var(--font-eng);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            letter-spacing: 0.05em;
+        }
+
+        .map-number-icon {
+            background-color: var(--primary-color);
+            color: #0b132b;
+            border: 2px solid var(--text-color);
+            border-radius: 50%;
+            width: 28px !important;
+            height: 28px !important;
+            margin-left: -14px !important;
+            margin-top: -14px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: var(--font-eng);
+            font-size: 13px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .map-number-icon:hover {
+            transform: scale(1.2) !important;
+            background-color: var(--accent-color);
+            color: #0b132b;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 3rem 1rem 2rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .time-box {
+                padding-left: 0;
+            }
+            .spot-content::before {
+                display: none;
+            }
+            .timeline::before {
+                display: none;
+            }
+            .timeline {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>宮城・海人の記憶を辿る旅</h1>
+        <div class="subtitle">2026年7月17日(金)〜20日(月・祝) 3泊4日</div>
+    </header>
+
+    <main>
+        <!-- Concept Section -->
+        <div class="concept-box">
+            <span class="concept-title">Outline</span>
+            <p class="concept-text">
+                北鎌倉を発ち、金華山・松島・塩竈をめぐる旅。奈良時代に日本で初めて金が産出した聖地・金華山（黄金山神社）、製塩と航海の神を祀る陸奥国一宮・鹽竈神社、朝廷の北進拠点であった多賀城跡。海とともに生きた人々の足あとを、船と鉄道でたどります。3日目の夜は塩竈みなと祭の花火クルーズ、最終日は多賀城跡の見学と海上渡御の見送りで締めくくります。
+            </p>
+        </div>
+
+        <!-- Meta Grid -->
+        <div class="tour-meta">
+            <div class="meta-card">
+                <span class="meta-label">📅 日程</span>
+                <span class="meta-value">2026年7月17日(金)〜20日(月・祝)<br><small style="color: var(--text-muted)">3泊4日</small></span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">🏡 宿泊</span>
+                <span class="meta-value">
+                    7/17 島周の宿さか井（鮎川）<br>
+                    7/18 松島ホテル和楽<br>
+                    7/19 スマイルホテル仙台多賀城
+                </span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">🚄 往路・復路</span>
+                <span class="meta-value">
+                    往路：東京14:20発→仙台15:51着（はやぶさ）<br>
+                    復路：仙台13:57発→東京15:32着（はやぶさ）
+                </span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">⛴️ 主な予約</span>
+                <span class="meta-value">
+                    金華山 定期船ホエール（7/18 10:30発）<br>
+                    花火クルーズ（7/19 18:30出港・丸文松島汽船）
+                </span>
+            </div>
+        </div>
+
+        <h2 class="section-title">🗺️ ルートマップ</h2>
+        <div id="map"></div>
+
+        <h2 class="section-title">📅 タイムライン & スケジュール</h2>
+
+        <!-- Day Tabs -->
+        <div class="day-tabs">
+            <button class="tab-btn active" onclick="switchDay(1)">Day 1 (7/17)</button>
+            <button class="tab-btn" onclick="switchDay(2)">Day 2 (7/18)</button>
+            <button class="tab-btn" onclick="switchDay(3)">Day 3 (7/19)</button>
+            <button class="tab-btn" onclick="switchDay(4)">Day 4 (7/20)</button>
+        </div>
+
+        <!-- Day 1 -->
+        <div id="day1" class="day-content active">
+            <div class="day-weather-strip" id="weather-day1">
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">天気データを読み込み中...</div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-box">12:45</div>
+                    <div class="spot-content">
+                        <span class="spot-name">北鎌倉発（横須賀線）</span>
+                        <p class="spot-desc">旅のスタート。</p>
+                        <div class="drive-info">🚃 移動: 約50分</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">13:35</div>
+                    <div class="spot-content">
+                        <span class="spot-name">東京駅 着</span>
+                        <p class="spot-desc">新幹線ホームへ乗り換え。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">14:20</div>
+                    <div class="spot-content">
+                        <span class="spot-name">東京発（はやぶさ） <span class="badge badge-done">予約済</span></span>
+                        <p class="spot-desc">東北新幹線で仙台へ。</p>
+                        <div class="drive-info">🚄 移動: 約1時間31分</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">15:51</div>
+                    <div class="spot-content">
+                        <span class="spot-name">仙台駅 着</span>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=JR仙台駅" target="_blank">📍 宮城県仙台市青葉区中央1丁目</a></span>
+                        <div class="drive-info">🚃 移動: 仙石東北ライン／仙石線で石巻へ</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">16:50</div>
+                    <div class="spot-content">
+                        <span class="spot-name">石巻駅 着</span>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=JR石巻駅" target="_blank">📍 宮城県石巻市鋳銭場</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">17:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">石巻駅前バス発 → 鮎川港（ミヤコーバス鮎川線）</span>
+                        <p class="spot-desc">所要67分。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">18:37</div>
+                    <div class="spot-content">
+                        <span class="spot-name">鮎川港 着 → さか井お迎え</span>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=鮎川港" target="_blank">📍 宮城県石巻市鮎川浜</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">19:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">島周の宿さか井 チェックイン <span class="badge badge-done">予約済</span></span>
+                        <p class="spot-desc">夕食・露天風呂。TEL 0225-45-2515</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div id="day2" class="day-content">
+            <div class="day-weather-strip" id="weather-day2">
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">天気データを読み込み中...</div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-box">朝食後</div>
+                    <div class="spot-content">
+                        <span class="spot-name">さか井 朝食</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">10:10</div>
+                    <div class="spot-content">
+                        <span class="spot-name">さか井出発（徒歩4分）</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">10:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">鮎川港発 → 金華山（定期船ホエール） <span class="badge badge-done">予約済</span></span>
+                        <p class="spot-desc">大人1名・福田美佐子。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">10:50</div>
+                    <div class="spot-content">
+                        <span class="spot-name">金華山 着</span>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=金華山黄金山神社" target="_blank">📍 宮城県石巻市鮎川浜金華山</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">10:50〜12:20</div>
+                    <div class="spot-content">
+                        <span class="spot-name">黄金山神社 参拝・散策</span>
+                        <p class="spot-desc">約1.5時間。日本で初めて金が産出したとされる聖地。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">12:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">金華山発 → 鮎川港</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">12:50</div>
+                    <div class="spot-content">
+                        <span class="spot-name">鮎川港 着 → さか井へ</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">13:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">チェックアウト・荷物受取</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">14:20</div>
+                    <div class="spot-content">
+                        <span class="spot-name">さか井送迎 → 石巻駅（15:30着）</span>
+                        <p class="spot-desc">要事前予約。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">15:40</div>
+                    <div class="spot-content">
+                        <span class="spot-name">石巻発（仙石線） → 松島海岸</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">16:10</div>
+                    <div class="spot-content">
+                        <span class="spot-name">松島海岸 着 → 松島ホテル和楽 チェックイン <span class="badge badge-done">予約済</span></span>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=松島ホテル和楽" target="_blank">📍 松島海岸駅 徒歩1分</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">夕方</div>
+                    <div class="spot-content">
+                        <span class="spot-name">松島散策（五大堂・雄島）</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">17:00〜</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ディナー <span class="badge badge-check">要予約</span></span>
+                        <p class="spot-desc">磯寿司（徒歩7分・★4.8）or Italian dining Bene（徒歩3分・★4.7）。席数少ないため要予約。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div id="day3" class="day-content">
+            <div class="day-weather-strip" id="weather-day3">
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">天気データを読み込み中...</div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-box">早朝〜</div>
+                    <div class="spot-content">
+                        <span class="spot-name">朝の松島散策</span>
+                        <p class="spot-desc">瑞巌寺・円通院・雄島。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">10:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">松島海岸発 → 本塩釜（仙石線10分）</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">10:30〜12:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">志波彦神社・鹽竈神社 参拝</span>
+                        <p class="spot-desc">陸奥国一宮・202段の石段。製塩と航海の神、塩土老翁神を祀る。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=鹽竈神社" target="_blank">📍 宮城県塩竈市一森山1-1</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">12:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">本塩釜駅コインロッカーに荷物預け</span>
+                        <p class="spot-desc">100円硬貨のみ・14台。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">12:00〜13:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ランチ <span class="badge badge-check">候補</span></span>
+                        <p class="spot-desc">中華飯店 塩龍（本塩釜徒歩3分・日曜昼11:00〜14:00・☎022-365-8422）or 塩竈寿司。塩龍は月曜定休のためこの日に。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">13:30〜16:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">塩竈の街をゆっくり散策</span>
+                        <p class="spot-desc">御釜神社・港町。「塩竈」地名の由来となった日本初の製塩地。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">〜16:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">本塩釜周辺で夕食・飲み物を買い出し</span>
+                        <p class="spot-desc">船内飲食OK。事前に買って船内で食べる。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">17:00〜17:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">マリンゲート塩釜で受付</span>
+                        <p class="spot-desc">本塩釜駅徒歩10分。受付は〜18:00・直前は混むので早めに。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=マリンゲート塩釜" target="_blank">📍 宮城県塩竈市貞山通1-1-1</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">18:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">花火クルーズ出港 <span class="badge badge-done">予約済</span></span>
+                        <p class="spot-desc">丸文松島汽船・花火約8,000発を海上から（打上げ20:00〜20:40）。現地払い3,500円/現金のみ。21:30帰港。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">21:45</div>
+                    <div class="spot-content">
+                        <span class="spot-name">本塩釜発（仙石線・仙台方面） → 中野栄着</span>
+                        <p class="spot-desc">22:05頃着。最終列車は要確認。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">22:20</div>
+                    <div class="spot-content">
+                        <span class="spot-name">スマイルホテル仙台多賀城 チェックイン <span class="badge badge-done">予約済</span></span>
+                        <p class="spot-desc">中野栄駅徒歩12分・大浴場〜24:00で静かに。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div id="day4" class="day-content">
+            <div class="day-weather-strip" id="weather-day4">
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">天気データを読み込み中...</div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time-box">08:00</div>
+                    <div class="spot-content">
+                        <span class="spot-name">スマイルホテル 朝食・チェックアウト</span>
+                        <p class="spot-desc">大浴場は前夜に。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">08:15</div>
+                    <div class="spot-content">
+                        <span class="spot-name">ホテル → 中野栄駅（徒歩12分）</span>
+                        <p class="spot-desc">荷物携行。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">08:30</div>
+                    <div class="spot-content">
+                        <span class="spot-name">中野栄 → 仙台（仙石線・約18分）</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">08:50</div>
+                    <div class="spot-content">
+                        <span class="spot-name">仙台駅コインロッカーに荷物 → 手ぶらに</span>
+                        <p class="spot-desc">帰りの新幹線発地なので回収がラク。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">09:10</div>
+                    <div class="spot-content">
+                        <span class="spot-name">仙台 → 国府多賀城（東北本線・約14分）</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">09:25〜10:20</div>
+                    <div class="spot-content">
+                        <span class="spot-name">多賀城跡（政庁跡・多賀城碑） 見学 <span class="badge badge-check">★優先</span></span>
+                        <p class="spot-desc">駅から徒歩約15分・野外・陸奥国府・724年創建。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=多賀城跡" target="_blank">📍 宮城県多賀城市市川</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">10:30〜11:15</div>
+                    <div class="spot-content">
+                        <span class="spot-name">東北歴史博物館</span>
+                        <p class="spot-desc">国府多賀城駅前・徒歩1分。9:30開館・祝日開館・入館料約460円。</p>
+                        <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=東北歴史博物館" target="_blank">📍 宮城県多賀城市高崎1-22-1</a></span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">11:20</div>
+                    <div class="spot-content">
+                        <span class="spot-name">国府多賀城 → 塩釜（東北本線・約4分）</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">11:35〜12:40</div>
+                    <div class="spot-content">
+                        <span class="spot-name">マリンゲート塩釜で海上渡御を外から見学</span>
+                        <p class="spot-desc">御座船「龍鳳丸」「鳳凰丸」の出港見送り。乗船はせず港から見学。出港時刻は公式発表待ち。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">12:50</div>
+                    <div class="spot-content">
+                        <span class="spot-name">塩釜 → 仙台（東北本線・約25分）</span>
+                        <p class="spot-desc">祭り当日は混雑・交通規制に注意、余裕をみて出発。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">13:15</div>
+                    <div class="spot-content">
+                        <span class="spot-name">仙台着・荷物回収・エスパルで塩竈寿司をテイクアウト</span>
+                        <p class="spot-desc">鮨しらはた（駅ナカ）等。13:57発まで約40分。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-box">13:57</div>
+                    <div class="spot-content">
+                        <span class="spot-name">仙台発 はやぶさ <span class="badge badge-done">予約済</span></span>
+                        <p class="spot-desc">東京15:32着 → 横須賀線15:54発 → 北鎌倉16:50頃。車内で塩竈寿司。17:00 北鎌倉でワンコお迎え。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <h3>⚠️ 当日メモ・注意事項</h3>
+            <ul>
+                <li><strong>さか井の送迎：</strong>石巻バス→鮎川港ルート・夕食時間・7/18の石巻行き送迎（14:20発）は事前連絡が必要（TEL 0225-45-2515）。</li>
+                <li><strong>花火クルーズ：</strong>現地払い3,500円・現金のみ。受付は〜18:00、直前は混雑するため早めに。荒天時の中止判断は当日14時頃（☎022-365-3611）。</li>
+                <li><strong>コインロッカー：</strong>本塩釜駅・仙台駅とも100円硬貨が必要な場合あり。事前に小銭を用意。</li>
+                <li><strong>7/20の動き方：</strong>荷物は仙台駅コインロッカーに預けて手ぶらで周遊。多賀城跡を優先し、海上渡御は乗船せず港から見送り。</li>
+                <li><strong>海上渡御の出港時刻：</strong>公式発表待ち。当日、塩竈市・塩竈神社の発表を要確認。</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <footer>
+        &copy; 2026 宮城・海人の記憶を辿る旅
+    </footer>
+
+    <!-- Leaflet Configuration Script -->
+    <script>
+        const spots = [
+            // Day 1
+            { id: 1, day: 1, name: "① 東京駅", lat: 35.6812, lon: 139.7671, desc: "Day 1 14:20 はやぶさ乗車" },
+            { id: 2, day: 1, name: "② 仙台駅", lat: 38.2602, lon: 140.8827, desc: "Day 1 15:51 着・乗換" },
+            { id: 3, day: 1, name: "③ 石巻駅", lat: 38.4326, lon: 141.3008, desc: "Day 1 16:50 着・バス乗換" },
+            { id: 4, day: 1, name: "④ 鮎川港", lat: 38.2915, lon: 141.4867, desc: "Day 1 18:37 着" },
+            { id: 5, day: 1, name: "⑤ 島周の宿さか井", lat: 38.2935, lon: 141.4855, desc: "Day 1 宿泊" },
+
+            // Day 2
+            { id: 5, day: 2, name: "⑤ 島周の宿さか井", lat: 38.2935, lon: 141.4855, desc: "Day 2 出発" },
+            { id: 4, day: 2, name: "④ 鮎川港", lat: 38.2915, lon: 141.4867, desc: "Day 2 10:30 金華山船発着" },
+            { id: 6, day: 2, name: "⑥ 金華山・黄金山神社", lat: 38.2680, lon: 141.5820, desc: "Day 2 10:50〜12:20 参拝" },
+            { id: 3, day: 2, name: "③ 石巻駅", lat: 38.4326, lon: 141.3008, desc: "Day 2 15:30 着" },
+            { id: 7, day: 2, name: "⑦ 松島ホテル和楽", lat: 38.3716, lon: 141.0570, desc: "Day 2 16:10 チェックイン・宿泊" },
+
+            // Day 3
+            { id: 7, day: 3, name: "⑦ 松島ホテル和楽", lat: 38.3716, lon: 141.0570, desc: "Day 3 早朝 松島散策後 出発" },
+            { id: 8, day: 3, name: "⑧ 鹽竈神社", lat: 38.3159, lon: 141.0290, desc: "Day 3 10:30〜12:00 参拝" },
+            { id: 9, day: 3, name: "⑨ 本塩釜駅", lat: 38.3183, lon: 141.0224, desc: "Day 3 ランチ・散策拠点" },
+            { id: 10, day: 3, name: "⑩ マリンゲート塩釜", lat: 38.3159, lon: 141.0178, desc: "Day 3 18:30 花火クルーズ出港" },
+            { id: 11, day: 3, name: "⑪ スマイルホテル仙台多賀城", lat: 38.2851, lon: 140.9862, desc: "Day 3 22:20 チェックイン・宿泊" },
+
+            // Day 4
+            { id: 11, day: 4, name: "⑪ スマイルホテル仙台多賀城", lat: 38.2851, lon: 140.9862, desc: "Day 4 08:00 チェックアウト" },
+            { id: 2, day: 4, name: "② 仙台駅", lat: 38.2602, lon: 140.8827, desc: "Day 4 荷物預け・帰路" },
+            { id: 12, day: 4, name: "⑫ 多賀城跡", lat: 38.3058, lon: 140.9928, desc: "Day 4 09:25〜10:20 見学" },
+            { id: 13, day: 4, name: "⑬ 東北歴史博物館", lat: 38.2999, lon: 140.9843, desc: "Day 4 10:30〜11:15" },
+            { id: 10, day: 4, name: "⑩ マリンゲート塩釜", lat: 38.3159, lon: 141.0178, desc: "Day 4 11:35〜12:40 海上渡御見学" }
+        ];
+
+        const map = L.map('map').setView([38.31, 141.15], 9);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+
+        const dayMarkers = { 1: [], 2: [], 3: [], 4: [] };
+        const dayPolylines = { 1: null, 2: null, 3: null, 4: null };
+        const dayColors = {
+            1: '#e0a96d',
+            2: '#48cae4',
+            3: '#ff6b6b',
+            4: '#9d8cff'
+        };
+
+        function createNumberedMarker(spot) {
+            const numIcon = L.divIcon({
+                className: 'map-number-icon',
+                html: spot.id,
+                iconSize: [28, 28]
+            });
+
+            const marker = L.marker([spot.lat, spot.lon], { icon: numIcon })
+                .bindPopup(`<strong style="color: #0b132b;">${spot.name}</strong><br><span style="color: #555;">${spot.desc}</span>`);
+
+            return marker;
+        }
+
+        [1, 2, 3, 4].forEach(dayNum => {
+            const daySpots = spots.filter(s => s.day === dayNum);
+            const latLons = [];
+
+            daySpots.forEach(spot => {
+                const marker = createNumberedMarker(spot);
+                marker.addTo(map);
+                dayMarkers[dayNum].push(marker);
+                latLons.push([spot.lat, spot.lon]);
+            });
+
+            if (latLons.length > 1) {
+                const polyline = L.polyline(latLons, {
+                    color: dayColors[dayNum],
+                    weight: 4,
+                    opacity: 0.8,
+                    dashArray: '5, 10'
+                }).addTo(map);
+                dayPolylines[dayNum] = polyline;
+            }
+        });
+
+        function switchDay(dayNum) {
+            document.querySelectorAll('.day-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('day' + dayNum).classList.add('active');
+
+            document.querySelectorAll('.tab-btn').forEach((btn, index) => {
+                if (index === (dayNum - 1)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            focusMapOnDay(dayNum);
+        }
+
+        function focusMapOnDay(dayNum) {
+            const daySpots = spots.filter(s => s.day === dayNum);
+            if (daySpots.length === 0) return;
+
+            const latLons = daySpots.map(s => [s.lat, s.lon]);
+            map.fitBounds(L.latLngBounds(latLons), { padding: [60, 60], maxZoom: 13 });
+
+            [1, 2, 3, 4].forEach(d => {
+                const polyline = dayPolylines[d];
+                if (polyline) {
+                    if (d === dayNum) {
+                        polyline.setStyle({ opacity: 0.9, weight: 6, dashArray: null });
+                    } else {
+                        polyline.setStyle({ opacity: 0.25, weight: 3, dashArray: '5, 10' });
+                    }
+                }
+            });
+        }
+
+        setTimeout(() => {
+            focusMapOnDay(1);
+        }, 500);
+
+        // Weather Widget Logic
+        (function () {
+            // Day1: 鮎川, Day2: 松島, Day3: 塩竈, Day4: 多賀城
+            const lat = "38.2915,38.3716,38.3159,38.3058";
+            const lon = "141.4867,141.0570,141.0178,140.9928";
+            const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=16`;
+
+            const weatherCodes = {
+                0: '☀️', 1: '🌤️', 2: '⛅️', 3: '☁️',
+                45: '🌫️', 48: '🌫️', 51: '🌧️', 53: '🌧️', 55: '🌧️',
+                61: '☔️', 63: '☔️', 65: '☔️', 71: '☃️', 73: '☃️', 75: '☃️',
+                80: '🌦️', 81: '🌦️', 82: '🌦️', 95: '⚡️', 96: '⚡️', 99: '⚡️'
+            };
+
+            function getWeatherIcon(code) { return weatherCodes[code] || '❓'; }
+
+            const targetDates = ['2026-07-17', '2026-07-18', '2026-07-19', '2026-07-20'];
+            const locationNames = ['鮎川（牡鹿半島）', '松島', '塩竈', '多賀城'];
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(dataList => {
+                    const forecasts = Array.isArray(dataList) ? dataList : [dataList];
+
+                    targetDates.forEach((dateStr, index) => {
+                        const strip = document.getElementById(`weather-day${index + 1}`);
+                        if (!strip) return;
+
+                        const forecastData = forecasts[index];
+                        if (!forecastData || !forecastData.daily) {
+                            strip.innerHTML = `<div class="day-weather-info">⚠️ 天気データを読み込めませんでした</div>`;
+                            return;
+                        }
+
+                        const dateIndex = forecastData.daily.time.indexOf(dateStr);
+                        if (dateIndex !== -1) {
+                            const code = forecastData.daily.weather_code[dateIndex];
+                            const maxTemp = Math.round(forecastData.daily.temperature_2m_max[dateIndex]);
+                            const minTemp = Math.round(forecastData.daily.temperature_2m_min[dateIndex]);
+
+                            strip.innerHTML = `
+                                <div class="day-weather-info">
+                                    <span class="day-weather-title">📍 ${locationNames[index]} の天気 (予定日: 7/${17 + index})</span>
+                                </div>
+                                <div class="day-weather-info">
+                                    <span class="day-weather-icon" style="margin-right: 0.5rem;">${getWeatherIcon(code)}</span>
+                                    <span class="day-weather-temp">${maxTemp}°C / ${minTemp}°C</span>
+                                </div>
+                            `;
+                        } else {
+                            const code = forecastData.daily.weather_code[0];
+                            const maxTemp = Math.round(forecastData.daily.temperature_2m_max[0]);
+                            const minTemp = Math.round(forecastData.daily.temperature_2m_min[0]);
+                            const dateLabel = forecastData.daily.time[0].slice(5).replace('-', '/');
+
+                            strip.innerHTML = `
+                                <div class="day-weather-info">
+                                    <span class="day-weather-title">📍 ${locationNames[index]} の最新天気 (${dateLabel})</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">(ツアー予定日は予報範囲外です)</span>
+                                </div>
+                                <div class="day-weather-info">
+                                    <span class="day-weather-icon" style="margin-right: 0.5rem;">${getWeatherIcon(code)}</span>
+                                    <span class="day-weather-temp">${maxTemp}°C / ${minTemp}°C</span>
+                                </div>
+                            `;
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    targetDates.forEach((_, index) => {
+                        const strip = document.getElementById(`weather-day${index + 1}`);
+                        if (strip) strip.innerHTML = `<div class="day-weather-info">⚠️ 天気データの取得に失敗しました</div>`;
+                    });
+                });
+        })();
+    </script>
+</body>
+
+</html>
