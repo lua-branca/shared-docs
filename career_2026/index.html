@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>職務経歴書｜福田美佐子</title>
+<style>
+:root {
+  --accent: #1F5F5B;        /* 深いティール */
+  --accent-light: #EAF3F2;
+  --ink: #2B2B2B;
+  --gray: #6b6b6b;
+  --line: #d9d9d9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 10pt; line-height: 1.75; color: var(--ink);
+  max-width: 186mm; margin: 0 auto; padding: 10mm 6mm 20mm;
+  background: #fff;
+}
+@page { size: A4; margin: 13mm 12mm; }
+@media print {
+  body { max-width: none; padding: 0; }
+  .no-break { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+
+/* ヘッダー */
+header { border-bottom: 3px solid var(--accent); padding-bottom: 14px; margin-bottom: 20px; }
+.doc-type { font-size: 9pt; letter-spacing: 0.4em; color: var(--gray); }
+h1 { font-size: 21pt; font-weight: 700; letter-spacing: 0.06em; margin: 2px 0 4px; }
+.header-sub { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 6px; }
+.tagline { font-size: 10.5pt; color: var(--accent); font-weight: 600; }
+.date { font-size: 9pt; color: var(--gray); }
+
+/* バッジ */
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
+.badge {
+  font-size: 8.5pt; font-weight: 600; color: var(--accent);
+  background: var(--accent-light); border: 1px solid var(--accent);
+  border-radius: 999px; padding: 1px 12px; white-space: nowrap;
+}
+
+/* 見出し */
+h2 {
+  font-size: 12.5pt; font-weight: 700; color: var(--ink);
+  border-left: 5px solid var(--accent); padding-left: 10px;
+  margin: 26px 0 10px;
+}
+h3 { font-size: 11pt; font-weight: 700; margin: 16px 0 6px; }
+h3 .period { font-size: 9pt; font-weight: 400; color: var(--gray); margin-left: 8px; }
+h4 { font-size: 10pt; font-weight: 700; color: var(--accent); margin: 12px 0 4px; }
+p { margin: 6px 0; }
+ul { padding-left: 20px; margin: 6px 0; }
+li { margin-bottom: 4px; }
+b, strong { font-weight: 700; }
+
+/* 3スキルカード */
+.skills3 { display: flex; gap: 8px; margin: 10px 0; }
+.skill-card {
+  flex: 1; border: 1px solid var(--line); border-top: 3px solid var(--accent);
+  border-radius: 4px; padding: 9px 11px; background: #fff;
+}
+.skill-card .t { font-size: 9.5pt; font-weight: 700; color: var(--accent); display: block; margin-bottom: 3px; }
+.skill-card .d { font-size: 8.8pt; line-height: 1.6; color: var(--ink); }
+
+/* システム構成図 */
+.diagram {
+  background: var(--accent-light); border-radius: 6px;
+  padding: 14px 12px 10px; margin: 10px 0;
+}
+.diagram-title { font-size: 9pt; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+.flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px; }
+.node {
+  background: #fff; border: 1.5px solid var(--accent); border-radius: 5px;
+  padding: 4px 9px; text-align: center; font-size: 8.5pt; font-weight: 600;
+  line-height: 1.4;
+}
+.node small { display: block; font-size: 7.5pt; font-weight: 400; color: var(--gray); }
+.arrow { color: var(--accent); font-weight: 700; font-size: 11pt; padding: 0 2px; }
+.diagram-note { font-size: 8pt; color: var(--gray); margin-top: 8px; text-align: center; }
+
+/* 経歴テーブル */
+table { border-collapse: collapse; width: 100%; font-size: 8.8pt; margin: 8px 0; }
+th, td { border: 1px solid var(--line); padding: 5px 8px; text-align: left; vertical-align: top; line-height: 1.55; }
+th { background: var(--accent-light); color: var(--accent); font-size: 8.5pt; white-space: nowrap; }
+td.nowrap { white-space: nowrap; }
+
+/* 自己PR */
+.pr-block { margin: 10px 0 14px; }
+.pr-block .pr-lead { font-size: 10.5pt; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
+.closing { text-align: right; margin-top: 26px; font-size: 10pt; }
+.link { color: var(--accent); word-break: break-all; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="doc-type">職務経歴書</div>
+  <div class="header-sub">
+    <h1>福田 美佐子</h1>
+    <div class="date">2026年7月16日現在</div>
+  </div>
+  <div class="tagline">経理BPO運用PM 6年 × AIによる業務システム内製の実務 — 現場を理解して、AIで実装する</div>
+  <div class="badges">
+    <span class="badge">Claude Code</span>
+    <span class="badge">Antigravity</span>
+    <span class="badge">Manus</span>
+    <span class="badge">Obsidian</span>
+    <span class="badge">GitHub / Actions</span>
+    <span class="badge">GAS / Looker Studio</span>
+    <span class="badge">Stripe連携</span>
+    <span class="badge">Shopify</span>
+    <span class="badge">経理BPO運用PM</span>
+    <span class="badge">要件定義〜実装</span>
+  </div>
+</header>
+
+<h2>職務要約</h2>
+<p>Web制作会社・Webコンサルティング会社を経てフリーランスとして独立。大手企業のWebディレクション・プロジェクトマネジメントを多数担当したのち、2020年より経理DX BPO企業のカスタマーサクセス／PMとして6年間、複数クライアントの経理業務フロー設計・チームマネジメントに従事しています。</p>
+<p>2026年からは事業会社の新規事業支援において、生成AI（Claude Code・Antigravity・Manus等）を用いた業務システムの内製——予約販売ECの構築、購入者管理・売上管理の自動化、KPIダッシュボード構築、事業戦略立案〜提案資料の生成——を要件定義から実装・引き継ぎまで一貫して担当。<b>「コーポレート業務の現場理解」と「AIによる内製化の実務」を両輪で持つ</b>ことが強みです。</p>
+
+<h2>活かせる経験・スキル</h2>
+<div class="skills3 no-break">
+  <div class="skill-card">
+    <span class="t">① AIによる業務効率化の設計・実装</span>
+    <span class="d">予約購入サイト（Stripe決済連携）から購入者管理・売上ダッシュボードまでをAIで設計・構築。要件定義・設計・実装・運用引き継ぎまで一貫対応。</span>
+  </div>
+  <div class="skill-card">
+    <span class="t">② 経理・バックオフィスのドメイン知識</span>
+    <span class="d">経理BPOの運用PM 6年。経理業務フローのボトルネックを現場感覚で把握し、AI導入の適所を見極められる。</span>
+  </div>
+  <div class="skill-card">
+    <span class="t">③ AIの出力特性・プロンプト設計の知見</span>
+    <span class="d">Claude Code・Antigravity・Manus等を用途別に使い分け。「指示書」型プロンプトで実用レベルの成果物を再現的に生成。</span>
+  </div>
+</div>
+
+<div class="diagram no-break">
+  <div class="diagram-title">▼ AI活用を定着させる方法論：ログと文脈の資産化（2026年1月〜、自身の業務全体で実証運用中）</div>
+  <p style="font-size:8.8pt; margin:0;">アウトプットだけでなく、<b>作業ログ・仕様書・判断の経緯までをMarkdownで一元蓄積し、どのAIからも同じ文脈を参照・引き継ぎできる構造</b>を構築・運用（現在はObsidian×GitHubで実装。業務委託先案件の仕様書・引き継ぎ文書もこの基盤で管理）。ツールに依存しない設計のため、企業環境（Notion・社内Wiki・Gitリポジトリ等）でも同じ構造を再現可能。AI活用が一過性で終わるか組織に定着するかは、この「ログを資産に変える基盤」があるかどうかで決まると考えている。</p>
+</div>
+
+<h2>職務経歴（現在稼働中の案件）</h2>
+
+<div class="no-break">
+<h3>食品関連の一般社団法人｜マーケティング・事業立ち上げ支援<span class="period">2026年1月〜現在</span></h3>
+<p>新商品（長期保存食品）事業の立ち上げを、マーケティングとシステム基盤の両面から支援。AIを全面活用し、外注開発なしで事業インフラを内製。</p>
+
+<div class="diagram">
+  <div class="diagram-title">▼ AIで設計・構築した予約販売ECシステム（受注〜入金管理の自動化）</div>
+  <div class="flow">
+    <div class="node">LP＋申込フォーム<small>PHP</small></div>
+    <span class="arrow">→</span>
+    <div class="node">Stripe決済<small>Payment Links</small></div>
+    <span class="arrow">→</span>
+    <div class="node">Webhook中継<small>自社サーバー</small></div>
+    <span class="arrow">→</span>
+    <div class="node">GAS<small>自動処理</small></div>
+    <span class="arrow">→</span>
+    <div class="node">受注管理／売上速報<small>スプレッドシート 2系統</small></div>
+  </div>
+  <div class="diagram-note">決済ステータスの全自動更新（未決済→決済完了）／注文番号突き合わせ／住所不備の自動検知／入金ベース売上ダッシュボード</div>
+</div>
+</div>
+
+<h4>【AIによる業務システムの設計・構築】</h4>
+<ul>
+  <li><b>予約販売ECシステム</b>：上図の受注管理システムをAIで設計・実装。Stripe Webhookによる決済ステータスの全自動更新、注文番号突き合わせロジック、障害対応・堅牢化まで運用</li>
+  <li><b>購入者管理・オペレーション自動化</b>：受注データの3層構造（元データ→分析DB→自動集計ダッシュボード）、住所不備の自動アラート、未払いリマインドメール一括配信。非エンジニアの現場が運用できる形に手順書化</li>
+  <li><b>KPI自動収集基盤</b>：GASでLINE公式アカウントAPI・X APIと連携しフォロワー数を毎日自動記録。GA4×スプレッドシート×Looker Studioで「SNS露出→サイト流入→売上」の相関を可視化する統合ダッシュボードを構築</li>
+  <li><b>Shopifyへの本格EC移行</b>：ストア構築・決済設定・利用規約整備・運用フロー確立</li>
+  <li><b>コーポレートサイトのAstro移行</b>と、GitHub Actionsによる自動デプロイ基盤の構築</li>
+  <li><b>バックオフィス整備</b>：勤怠管理・名刺管理等の仕組み化</li>
+</ul>
+
+<h4>【AIによる戦略立案〜アウトプット生成】</h4>
+<ul>
+  <li>2026年統合マーケティング戦略・B2B提案資料・競合比較資料等を、AIで企画から納品物まで一貫作成</li>
+  <li>TV露出時のプロモーション対応、プレスリリース、LP・メール等の制作</li>
+</ul>
+
+<div class="no-break">
+<h3>経理DX BPO企業｜経理DX BPO カスタマーサクセス／PM<span class="period">2020年4月〜現在（6年目）</span></h3>
+<p>経理BPOサービスのカスタマーサクセスチームPMとして、担当クライアント4件・1クライアントあたり2〜10名のチームメンバーを管理。</p>
+<ul>
+  <li>クライアントごとの経理業務フロー設計・運用ディレクション</li>
+  <li>クライアントとオペレーションチームの間に入る調整・翻訳ハブ</li>
+  <li>チームメンバーの育成・体制構築</li>
+</ul>
+</div>
+
+<h2>職務経歴（過去の主な実績）</h2>
+<table>
+<tr><th>期間</th><th>クライアント／所属</th><th>業務内容</th></tr>
+<tr><td class="nowrap">2021年5月〜2025年2月</td><td>教育SaaS企業</td><td>協働学習支援SaaSの導入事例コンテンツの企画・取材・編集（教育委員会・学校等）</td></tr>
+<tr><td class="nowrap">2024年7月〜2025年1月</td><td>地域観光メディア</td><td>SEO記事ライティング（AIライティング活用による効率化）</td></tr>
+<tr><td class="nowrap">2018年9月〜2020年3月</td><td>大手総合人材サービスグループ</td><td>コーポレートサイトのディレクション、IRサイト決算対応、運用改善提案</td></tr>
+<tr><td class="nowrap">2018年1月〜2018年7月</td><td>外資系保険会社</td><td>オウンドメディアのWebディレクション、Sitecore移行後の運用構築</td></tr>
+<tr><td class="nowrap">2016年10月〜2017年11月</td><td>大手クレジットカード会社</td><td>会員向けサイトのWebディレクション、GitHub運用・AEM移行サポート</td></tr>
+<tr><td class="nowrap">2011年12月〜2016年4月</td><td>大手教育サービス企業</td><td>通信教育会員ページのディレクション、ログ解析・運用改善</td></tr>
+<tr><td class="nowrap">2020年5月〜2020年9月</td><td>環境分野の公益財団法人</td><td>国連環境計画主導プラットホームのシステム設計調査・RFP作成</td></tr>
+<tr><td class="nowrap">2015年5月〜2017年4月</td><td>在日フランス大使館 貿易投資庁</td><td>フランスワインの公認ナビゲーターとしてPR・コンテンツ制作</td></tr>
+<tr><td class="nowrap">2008年1月〜2009年3月</td><td>交通情報サービス企業（会社員）</td><td>自社サービスサイトのリニューアル企画・ディレクション</td></tr>
+<tr><td class="nowrap">2005年12月〜2008年1月</td><td>Webコンサルティング企業（会社員）</td><td>上場企業向けWebコンサルティング、企画提案〜納品ディレクション</td></tr>
+<tr><td class="nowrap">1997年7月〜2005年10月</td><td>Web制作会社（会社員）</td><td>Web制作・サーバ構築、開発部署立ち上げ、PM。FileMaker/PHPでの業務システム開発多数</td></tr>
+</table>
+
+<h2>スキル・使用ツール</h2>
+<ul>
+  <li><b>生成AI</b>：Claude（Claude Code）／Antigravity／Manus／Gemini／ChatGPT — 用途別の使い分け・プロンプト設計・業務組み込み</li>
+  <li><b>ナレッジ・開発基盤</b>：Obsidian（作業ログ・仕様書のMarkdown一元管理、AI間の文脈引き継ぎ）／GitHub・GitHub Actions（バージョン管理・自動デプロイ）</li>
+  <li><b>自動化・データ基盤</b>：Google Apps Script／Looker Studio／GA4／スプレッドシート（QUERY・ピボット設計）／Stripe（決済・Webhook連携）</li>
+  <li><b>EC・CMS</b>：Shopify／WordPress／Astro／Movable Type／AEM／Sitecore</li>
+  <li><b>開発関連</b>：PHP／HTML・CSS／要件定義・RFP作成</li>
+  <li><b>業務ツール</b>：Slack／Zoom／Notion／Misoca 等</li>
+</ul>
+
+<h2>発信活動</h2>
+<p>noteマガジン「拡張するプロデューサー」：AI活用の実践記録（業務自動化・開発ワークフロー・アプリ開発等）を連載<br>
+<span class="link">https://note.com/lua_branca/m/m0011c4f4aa0e</span></p>
+
+<h2>稼働条件</h2>
+<ul>
+  <li><b>稼働開始</b>：2026年8月〜可能</li>
+  <li><b>稼働量</b>：週2日程度（月40〜50時間目安）から。業務内容やボリュームに応じて柔軟に調整可能</li>
+  <li><b>勤務形態</b>：フルリモート対応（Slack／Zoom／Notion等ツール対応可）</li>
+</ul>
+
+<h2>自己PR</h2>
+
+<div class="pr-block">
+  <div class="pr-lead">1. ツールに依存しない、AI活用の判断軸</div>
+  <p>「AIの使い方」はすぐに古くなります。だから私が磨いてきたのは、特定ツールの操作ではなく、「その時使える最良のAIを局面ごとに使い分けて、やりたいことを実現する」という判断の軸です。道具は入れ替わっても、この軸は変わりません。それを支えているのが、作業ログ・仕様書・判断の経緯を蓄積し、どのAIからでも同じ文脈を引き継げるナレッジ基盤です。だからClaude Codeで設計し、Antigravityで開発し、Manusで仕上げるという連携ができ、来年ツールの名前がすべて変わっていても、同じことができます。これからのAI活用の幅を決めるのは、モデルの性能よりも「これまで拾ってこなかったログを、どれだけ資産に変えられるか」の見極めだと考えています。</p>
+</div>
+
+<div class="pr-block">
+  <div class="pr-lead">2. 人間のレビュー層まで含めた、業務フロー設計</div>
+  <p>Webの現場に26年いて、「効率化の道具」が主役交代するのを何度も見てきました。AIも魔法ではありません。出力を過信すれば、誤りがそのまま正本のデータを汚します。だから私は、人間のレビュー層をどこに挟むかまで含めて業務フローを設計します。入口は気軽に、正本は正確に。この感覚は、正確さが信頼のすべてである経理BPOの現場を6年間回してきた経験に根ざしています。</p>
+</div>
+
+<div class="pr-block">
+  <div class="pr-lead">3. 人とAIの間に立つ「翻訳者」としての経験</div>
+  <p>クライアントと制作現場、経営と実務、発注側と開発側——立場の違う人たちの間に入り、双方の言葉を翻訳しながら物事を前に進めることを続けてきました。いま私が間に立っているのは、人間とAIです。AI導入で本当に難しいのは技術ではなく、現場の業務と人の気持ちを理解した上での設計だと、実務を通じて実感しています。この「翻訳者」としての26年分の経験と、日々AIとともに手を動かしている現在地。その両方を役立てたいと考えています。</p>
+</div>
+
+<p class="closing">以上</p>
+
+</body>
+</html>
