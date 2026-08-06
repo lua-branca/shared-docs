@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026.08.09-11 悟りを開くまで帰れま10｜福井・京都・滋賀</title>
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        /* ============================================================
+           配色はマインドフリー公式サイトのトークンに合わせています
+           正本: 50_Rebuild_2026/site/src/styles/tokens.css
+           ============================================================ */
+        :root {
+            /* 紫のスケール */
+            --p900: #241C2E;
+            /* 暗い面の地 */
+            --p700: #3A2F4A;
+            /* 見出し・リンク */
+            --p500: #5A4A6E;
+            --p300: #9A8CAA;
+            --p200: #BCAECC;
+            --p100: #E4DEEA;
+            /* 罫線 */
+            --p050: #F2EFF4;
+            /* ブロックの地 */
+
+            /* ロゴから拾った2色 */
+            --gold: #D0A040;
+            --gold-dark: #8A6620;
+            --asagi: #90D0D0;
+
+            /* 中性色・状態色 */
+            --cream: #F7F5F0;
+            --ink: #2B2926;
+            --ink-2: #544F47;
+            --verm: #9E3B24;
+
+            --mincho: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif;
+            --gothic: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, sans-serif;
+        }
+
+        body {
+            font-family: var(--gothic);
+            background-color: var(--p050);
+            color: var(--ink);
+            line-height: 1.75;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--p900);
+            color: var(--cream);
+            padding: 2.8rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+        }
+
+        h1 {
+            margin: 0;
+            font-family: var(--mincho);
+            font-weight: 500;
+            font-size: 1.6rem;
+            letter-spacing: 0.1em;
+            line-height: 1.5;
+        }
+
+        .subtitle {
+            font-size: 0.88rem;
+            color: var(--p200);
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .date-badge {
+            display: inline-block;
+            margin-bottom: 1.2rem;
+            padding: 0.25rem 1rem;
+            border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            color: var(--gold);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .concept-box {
+            background: #fff;
+            border: 1px solid var(--p100);
+            border-top: 3px solid var(--gold);
+            padding: 1.6rem 1.4rem;
+            margin-bottom: 2rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .concept-title {
+            color: var(--gold-dark);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: block;
+            letter-spacing: 0.2em;
+            font-size: 0.8rem;
+        }
+
+        .concept-box p {
+            font-family: var(--mincho);
+            margin: 0;
+        }
+
+        .meet-box {
+            background: var(--p900);
+            color: var(--cream);
+            padding: 1.6rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .meet-box .label {
+            font-size: 0.78rem;
+            color: var(--p200);
+            letter-spacing: 0.15em;
+        }
+
+        .meet-box .time-big {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 0.2rem 0 0.4rem;
+            letter-spacing: 0.05em;
+            color: var(--gold);
+        }
+
+        .meet-box .place {
+            font-size: 1.05rem;
+            font-weight: bold;
+        }
+
+        .meet-box a {
+            color: var(--asagi);
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 0.9rem;
+            border-bottom: 1px dotted color-mix(in srgb, var(--asagi) 60%, transparent);
+            text-decoration: none;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--p100);
+            z-index: 1;
+        }
+
+        .map-note {
+            font-size: 0.75rem;
+            color: var(--p300);
+            margin: 0 0 2rem;
+            text-align: center;
+        }
+
+        .day-header {
+            background: #fff;
+            border-left: 5px solid var(--p700);
+            padding: 1rem 1.2rem;
+            margin: 2.8rem 0 1rem;
+            border-radius: 4px;
+        }
+
+        .day-header h2 {
+            margin: 0;
+            font-family: var(--mincho);
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--p700);
+            letter-spacing: 0.08em;
+        }
+
+        .day-header .day-area {
+            font-size: 0.82rem;
+            color: var(--ink-2);
+            margin-top: 0.3rem;
+        }
+
+        /* ── 天気ストリップ ── */
+        .day-weather-strip {
+            background: #fff;
+            border: 1px solid var(--p100);
+            border-radius: 8px;
+            padding: 0.7rem 1.1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .day-weather-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .day-weather-title {
+            color: var(--p700);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .day-weather-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .day-weather-temp {
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .day-weather-temp .tmax {
+            color: var(--verm);
+        }
+
+        .day-weather-note {
+            font-size: 0.75rem;
+            color: var(--p300);
+        }
+
+        .timeline {
+            position: relative;
+            margin: 1.5rem 0;
+            padding-left: 0.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .time {
+            min-width: 62px;
+            font-weight: bold;
+            color: var(--p700);
+            font-feature-settings: "palt";
+            font-size: 0.95rem;
+            padding-top: 0.1rem;
+        }
+
+        .time.num {
+            color: var(--p300);
+            font-size: 1.05rem;
+        }
+
+        .content {
+            border-left: 2px solid var(--p100);
+            padding-left: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            flex: 1;
+        }
+
+        .content::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 7px;
+            width: 12px;
+            height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .content.talk::before {
+            background: var(--verm);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--verm) 18%, transparent);
+        }
+
+        .spot-name {
+            font-family: var(--mincho);
+            font-weight: 500;
+            font-size: 1.15rem;
+            margin-bottom: 0.3rem;
+            display: block;
+            color: var(--p700);
+        }
+
+        .spot-desc {
+            font-size: 0.9rem;
+            color: var(--ink-2);
+        }
+
+        .talk-tag {
+            display: inline-block;
+            font-family: var(--gothic);
+            background: var(--verm);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 3px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            letter-spacing: 0.05em;
+        }
+
+        .address {
+            font-size: 0.8rem;
+            color: var(--ink-2);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .address a {
+            color: var(--p500);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--p300);
+        }
+
+        .meal {
+            background: var(--cream);
+            border-radius: 4px;
+        }
+
+        .stay {
+            background: color-mix(in srgb, var(--p100) 45%, #fff);
+            border-radius: 4px;
+        }
+
+        .meal .content,
+        .stay .content {
+            padding-top: 0.6rem;
+        }
+
+        .plan-box {
+            background: #fff;
+            border: 1px solid var(--p100);
+            border-top: 3px solid var(--gold);
+            padding: 1.3rem 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .plan-box h3 {
+            margin: 0 0 0.5rem;
+            color: var(--gold-dark);
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+        }
+
+        .plan-box p {
+            font-family: var(--mincho);
+            font-size: 1.05rem;
+            margin: 0 0 0.5rem;
+        }
+
+        .goal-box {
+            background: var(--p900);
+            color: var(--gold);
+            text-align: center;
+            padding: 1.3rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+        }
+
+        .info-box {
+            background: #fff;
+            border: 1px solid var(--p100);
+            padding: 1.3rem 1.5rem;
+            border-radius: 6px;
+            margin-top: 2rem;
+        }
+
+        .info-box h3 {
+            margin: 0 0 0.8rem;
+            font-size: 0.95rem;
+            color: var(--p700);
+            letter-spacing: 0.05em;
+        }
+
+        .info-box ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.45rem;
+        }
+
+        .tbc {
+            color: var(--verm);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: var(--p200);
+            background: var(--p900);
+            margin-top: 3rem;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="date-badge">2026.08.09 SUN - 08.11 TUE</div>
+        <h1>悟りを開くまで<br>帰れま10</h1>
+        <div class="subtitle">福井・京都・滋賀／2泊3日 神社参拝ツアー</div>
+    </header>
+
+    <main>
+        <div class="concept-box">
+            <span class="concept-title">CONCEPT</span>
+            <p>由緒を巡る旅ではなく、<strong>「神様と会話する脳」をひらく</strong>旅。<br>
+                小さい頃の学習や常識でかかった封印を外し、<br>
+                対話しやすい状態を整えたうえで、ひたすら実践する3日間です。</p>
+        </div>
+
+        <div class="meet-box">
+            <div class="label">8月9日（日）集合</div>
+            <div class="time-big">6:15</div>
+            <div class="place">永田町駅 4番出口を出たところ</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=永田町駅4番出口" target="_blank">📍 Googleマップで開く</a>
+        </div>
+
+        <!-- Map Container -->
+        <div id="map"></div>
+        <p class="map-note">※ピンの位置は全体像を掴むための概略です。正確な場所は各スポットのマップリンクからご確認ください。</p>
+
+        <!-- ============ DAY 1 ============ -->
+        <div class="day-header">
+            <h2>DAY 1 ｜ 8月9日（日）</h2>
+            <div class="day-area">東京 → 福井（敦賀・若狭・小浜） → 京都（東舞鶴 泊）</div>
+        </div>
+
+        <div class="day-weather-strip" id="weather-day1">
+            <div class="day-weather-note">天気データを読み込み中...</div>
+        </div>
+
+        <section class="timeline">
+            <div class="timeline-item">
+                <div class="time">6:15</div>
+                <div class="content">
+                    <span class="spot-name">永田町駅 4番出口 集合</span>
+                    <span class="spot-desc">出発前に<strong>皇居遥拝</strong>。旅の目的をセットアップします。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=永田町駅4番出口"
+                            target="_blank">📍 東京都千代田区永田町</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">◇</div>
+                <div class="content">
+                    <span class="spot-name">車内研修</span>
+                    <span class="spot-desc">移動時間を使って、3日間の土台となる考え方を共有します。</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">01</div>
+                <div class="content talk">
+                    <span class="spot-name">氣比神宮<span class="talk-tag">対話の練習</span></span>
+                    <span class="spot-desc">北陸道総鎮守。まずはここで、神様との会話を実践します。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=氣比神宮"
+                            target="_blank">📍 福井県敦賀市曙町11-68</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">02</div>
+                <div class="content">
+                    <span class="spot-name">霊石大神岩</span>
+                    <span class="spot-desc">巨石に宿るエネルギーを受け取ります。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=霊石大神岩"
+                            target="_blank">📍 Googleマップで検索</a> <span class="tbc">※所在地確認中</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">03</div>
+                <div class="content talk">
+                    <span class="spot-name">泉岡一言主神社<span class="talk-tag">対話の練習</span></span>
+                    <span class="spot-desc">一言の願いを聞き届ける神様。ここでも会話の実践を行います。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=泉岡一言主神社"
+                            target="_blank">📍 福井県三方上中郡若狭町</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">04</div>
+                <div class="content">
+                    <span class="spot-name">瓜割の滝（修験道の聖地）</span>
+                    <span class="spot-desc">体にエネルギーが染み入る、<strong>最高に美味しい水</strong>が飲めます。<br>
+                        水を持ち帰れるよう、空のボトルがあると◎</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=瓜割の滝+福井県若狭町"
+                            target="_blank">📍 福井県三方上中郡若狭町天徳寺</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">05</div>
+                <div class="content">
+                    <span class="spot-name">若狭彦神社</span>
+                    <span class="spot-desc">若狭国一之宮（上社）。静かな杉木立のなかを進みます。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=若狭彦神社"
+                            target="_blank">📍 福井県小浜市龍前28-7</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">06</div>
+                <div class="content">
+                    <span class="spot-name">若狭姫神社</span>
+                    <span class="spot-desc">若狭国一之宮（下社）。彦神社と対になる女神の社。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=若狭姫神社"
+                            target="_blank">📍 福井県小浜市遠敷65-41</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">07</div>
+                <div class="content talk">
+                    <span class="spot-name">八百比丘尼 入定地<span class="talk-tag">対話の練習</span></span>
+                    <span class="spot-desc">八百比丘尼さんとの会話を練習し、<strong>悟りのエネルギー</strong>を頂きます。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=八百比丘尼入定洞+空印寺"
+                            target="_blank">📍 福井県小浜市男山（空印寺）</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item meal">
+                <div class="time num">🍽</div>
+                <div class="content">
+                    <span class="spot-name">夕食：鮨 離れ</span>
+                    <span class="spot-desc">一日の体験を分かち合いながら。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=鮨+離れ"
+                            target="_blank">📍 Googleマップで検索</a> <span class="tbc">※所在地確認中</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item stay">
+                <div class="time num">🛏</div>
+                <div class="content">
+                    <span class="spot-name">宿泊：スーパーホテル東舞鶴</span>
+                    <span class="spot-desc"><strong>京都北の天然温泉♨️付き</strong>。一日の疲れをしっかり流してください。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=スーパーホテル東舞鶴"
+                            target="_blank">📍 京都府舞鶴市</a></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DAY 2 ============ -->
+        <div class="day-header">
+            <h2>DAY 2 ｜ 8月10日（月）</h2>
+            <div class="day-area">京都・丹後（籠神社・京丹後） → 亀岡 → 京都市内 泊</div>
+        </div>
+
+        <div class="day-weather-strip" id="weather-day2">
+            <div class="day-weather-note">天気データを読み込み中...</div>
+        </div>
+
+        <section class="timeline">
+            <div class="timeline-item">
+                <div class="time num">01</div>
+                <div class="content">
+                    <span class="spot-name">眞名井神社</span>
+                    <span class="spot-desc">籠神社の奥宮。磐座が今も残る、丹後でもっとも古い聖域。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=真名井神社+宮津市"
+                            target="_blank">📍 京都府宮津市中野</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time">10:00</div>
+                <div class="content">
+                    <span class="spot-name">籠神社 正式参拝</span>
+                    <span class="spot-desc">元伊勢。<strong>10時より正式参拝</strong>のため、時間厳守でお願いします。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=籠神社"
+                            target="_blank">📍 京都府宮津市大垣430</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item meal">
+                <div class="time num">🍽</div>
+                <div class="content">
+                    <span class="spot-name">昼食：レストラン黒岬</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=レストラン黒岬"
+                            target="_blank">📍 Googleマップで検索</a> <span class="tbc">※所在地確認中</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">02</div>
+                <div class="content">
+                    <span class="spot-name">伊根</span>
+                    <span class="spot-desc">海に浮かぶ舟屋の集落。<span class="tbc">※渋滞状況により変更の可能性あり</span></span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=伊根の舟屋"
+                            target="_blank">📍 京都府与謝郡伊根町</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">03</div>
+                <div class="content">
+                    <span class="spot-name">比沼麻奈為神社</span>
+                    <span class="spot-desc"><strong>外宮の御神体が元々あった場所</strong>。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=比沼麻奈為神社"
+                            target="_blank">📍 京都府京丹後市峰山町久次</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">04</div>
+                <div class="content talk">
+                    <span class="spot-name">藤社神社<span class="talk-tag">対話の練習</span></span>
+                    <span class="spot-desc"><strong>豊受大神のお墓の有力候補地</strong>。ここでも会話の実践を行います。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=藤社神社+京丹後市"
+                            target="_blank">📍 京都府京丹後市峰山町鱒留</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">05</div>
+                <div class="content">
+                    <span class="spot-name">出雲大神宮</span>
+                    <span class="spot-desc">丹波國一之宮。元出雲とも呼ばれる古社。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=出雲大神宮"
+                            target="_blank">📍 京都府亀岡市千歳町</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item stay">
+                <div class="time num">🛏</div>
+                <div class="content">
+                    <span class="spot-name">ホテル京阪 京都八条口 チェックイン</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=ホテル京阪京都八条口"
+                            target="_blank">📍 京都市南区</a></span>
+                </div>
+            </div>
+
+            <div class="timeline-item meal">
+                <div class="time">19:30</div>
+                <div class="content">
+                    <span class="spot-name">夕食：炭棲堂</span>
+                    <span class="spot-desc">京都の大人気店。19時半より。</span>
+                    <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=炭棲堂+京都"
+                            target="_blank">📍 Googleマップで検索</a> <span class="tbc">※所在地確認中</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time num">✦</div>
+                <div class="content">
+                    <span class="spot-name">食後：シッディ瞑想 ほか（希望者）</span>
+                    <span class="spot-desc">お部屋にて。参加は自由です。</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DAY 3 ============ -->
+        <div class="day-header">
+            <h2>DAY 3 ｜ 8月11日（火）</h2>
+            <div class="day-area">最終日／プランA・Bのいずれかを実施 → 東京へ</div>
+        </div>
+
+        <div class="day-weather-strip" id="weather-day3">
+            <div class="day-weather-note">天気データを読み込み中...</div>
+        </div>
+
+        <div class="plan-box">
+            <h3>PLAN A</h3>
+            <p><strong>日吉大社</strong>参登拝にて<br>「神様と会話するまで帰れま10」</p>
+            <span class="address"><a href="https://www.google.com/maps/search/?api=1&query=日吉大社" target="_blank">📍
+                    滋賀県大津市坂本5-1-1</a></span>
+        </div>
+
+        <div class="plan-box">
+            <h3>PLAN B</h3>
+            <p><strong>とある聖地</strong>にて<br>「悟りを開くまで帰れま10」</p>
+        </div>
+
+        <p style="font-size:0.85rem; text-align:center;">
+            <span class="tbc">※どちらを実施するかは当日ご案内します。</span>
+        </p>
+
+        <div class="goal-box">
+            22:00 皇居 着 ／ 解散
+        </div>
+
+        <!-- ============ 持ち物・ご案内 ============ -->
+        <div class="info-box">
+            <h3>🎒 持ち物メモ</h3>
+            <ul>
+                <li><strong>空のボトル・水筒</strong>（瓜割の滝の水を持ち帰るため）</li>
+                <li><strong>歩きやすい靴</strong>（山道・石段があります）</li>
+                <li><strong>正式参拝の服装</strong>（8/10 籠神社。襟のあるもの・素足を避ける等）</li>
+                <li>暑さ対策（帽子・日傘・塩分・冷感グッズ）／虫よけ</li>
+                <li>雨具（両手が空くレインウェアが便利）</li>
+                <li>モバイルバッテリー（山間部は電池の消耗が早めです）</li>
+                <li>2泊分の着替え・洗面用具（1日目は温泉付きの宿です）</li>
+                <li>参拝用の小銭・御朱印帳</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>📌 ご案内</h3>
+            <ul>
+                <li>行程は当日の交通・天候により前後する場合があります。</li>
+                <li><span class="talk-tag" style="margin-left:0">対話の練習</span> のマークがある場所は、神様との会話を実践する場です。</li>
+                <li>山間部・トンネルでは電波が届きにくくなります。このページは事前に一度開いておくと安心です。</li>
+                <li>天気は<a href="https://open-meteo.com/" target="_blank" style="color:var(--p500);">Open-Meteo</a>の予報を自動表示しています（ページを開いた時点の最新値）。</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <footer>
+        悟りを開くまで帰れま10 ／ 2026.08.09-11
+    </footer>
+
+    <script>
+        /* ── 地図 ── */
+        var map = L.map('map').setView([35.4, 135.6], 8);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var spots = [
+            { name: "永田町駅 4番出口", lat: 35.6786, lon: 139.7403, desc: "集合 (8/9 6:15)" },
+            { name: "氣比神宮", lat: 35.6554, lon: 136.0723, desc: "DAY1 ★対話の練習" },
+            { name: "泉岡一言主神社", lat: 35.5350, lon: 135.9300, desc: "DAY1 ★対話の練習" },
+            { name: "瓜割の滝", lat: 35.4900, lon: 135.8700, desc: "DAY1 修験道の聖地・名水" },
+            { name: "若狭彦神社", lat: 35.4744, lon: 135.7695, desc: "DAY1 若狭国一之宮(上社)" },
+            { name: "若狭姫神社", lat: 35.4820, lon: 135.7730, desc: "DAY1 若狭国一之宮(下社)" },
+            { name: "八百比丘尼 入定地", lat: 35.4960, lon: 135.7400, desc: "DAY1 ★対話の練習" },
+            { name: "スーパーホテル東舞鶴", lat: 35.4740, lon: 135.3900, desc: "DAY1 宿泊（天然温泉）" },
+            { name: "眞名井神社", lat: 35.5760, lon: 135.1990, desc: "DAY2 籠神社 奥宮" },
+            { name: "籠神社", lat: 35.5730, lon: 135.1975, desc: "DAY2 10:00 正式参拝" },
+            { name: "伊根", lat: 35.6752, lon: 135.2909, desc: "DAY2 ※渋滞による" },
+            { name: "比沼麻奈為神社", lat: 35.6200, lon: 135.0870, desc: "DAY2 外宮の御神体の元の地" },
+            { name: "藤社神社", lat: 35.6150, lon: 135.0790, desc: "DAY2 ★対話の練習" },
+            { name: "出雲大神宮", lat: 35.0440, lon: 135.5810, desc: "DAY2 丹波國一之宮" },
+            { name: "ホテル京阪 京都八条口", lat: 34.9830, lon: 135.7600, desc: "DAY2 宿泊" },
+            { name: "日吉大社", lat: 35.0700, lon: 135.8640, desc: "DAY3 プランA" }
+        ];
+
+        var group = L.featureGroup();
+        spots.forEach(function (spot) {
+            var marker = L.marker([spot.lat, spot.lon])
+                .bindPopup("<b>" + spot.name + "</b><br>" + spot.desc);
+            marker.addTo(group);
+            marker.addTo(map);
+        });
+        map.fitBounds(group.getBounds(), { padding: [40, 40] });
+
+        /* ── 天気（Open-Meteo） ── */
+        (function () {
+            // DAY1: 小浜市(若狭) / DAY2: 宮津市(丹後) / DAY3: 大津市(坂本)
+            const lat = "35.4956,35.5350,35.0700";
+            const lon = "135.7461,135.1960,135.8640";
+            const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&forecast_days=16`;
+
+            const weatherCodes = {
+                0: '☀️', 1: '🌤️', 2: '⛅️', 3: '☁️',
+                45: '🌫️', 48: '🌫️', 51: '🌧️', 53: '🌧️', 55: '🌧️',
+                61: '☔️', 63: '☔️', 65: '☔️', 71: '☃️', 73: '☃️', 75: '☃️',
+                80: '🌦️', 81: '🌦️', 82: '🌦️', 95: '⚡️', 96: '⚡️', 99: '⚡️'
+            };
+            function getWeatherIcon(code) { return weatherCodes[code] || '❓'; }
+
+            const targetDates = ['2026-08-09', '2026-08-10', '2026-08-11'];
+            const dateLabels = ['8/9（日）', '8/10（月）', '8/11（火）'];
+            const locationNames = ['小浜市（若狭）', '宮津市（丹後）', '大津市（坂本）'];
+
+            function render(strip, title, code, tmax, tmin, pop, note) {
+                strip.innerHTML = `
+                    <div class="day-weather-info">
+                        <span class="day-weather-title">📍 ${title}</span>
+                        ${note ? `<span class="day-weather-note">${note}</span>` : ''}
+                    </div>
+                    <div class="day-weather-info">
+                        <span class="day-weather-icon">${getWeatherIcon(code)}</span>
+                        <span class="day-weather-temp"><span class="tmax">${tmax}°</span> / ${tmin}°</span>
+                        ${pop !== null && pop !== undefined ? `<span class="day-weather-note">☂ ${pop}%</span>` : ''}
+                    </div>
+                `;
+            }
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(dataList => {
+                    const forecasts = Array.isArray(dataList) ? dataList : [dataList];
+
+                    targetDates.forEach((dateStr, index) => {
+                        const strip = document.getElementById(`weather-day${index + 1}`);
+                        if (!strip) return;
+
+                        const forecastData = forecasts[index];
+                        if (!forecastData || !forecastData.daily) {
+                            strip.innerHTML = `<div class="day-weather-note">⚠️ 天気データを読み込めませんでした</div>`;
+                            return;
+                        }
+
+                        const d = forecastData.daily;
+                        const i = d.time.indexOf(dateStr);
+
+                        if (i !== -1) {
+                            render(strip,
+                                `${locationNames[index]} ${dateLabels[index]} の予報`,
+                                d.weather_code[i],
+                                Math.round(d.temperature_2m_max[i]),
+                                Math.round(d.temperature_2m_min[i]),
+                                d.precipitation_probability_max ? d.precipitation_probability_max[i] : null,
+                                '');
+                        } else {
+                            // ツアー日が予報範囲外のとき（開催のかなり前に開いた場合）
+                            const label = d.time[0].slice(5).replace('-', '/');
+                            render(strip,
+                                `${locationNames[index]} の最新天気（${label}）`,
+                                d.weather_code[0],
+                                Math.round(d.temperature_2m_max[0]),
+                                Math.round(d.temperature_2m_min[0]),
+                                d.precipitation_probability_max ? d.precipitation_probability_max[0] : null,
+                                'ツアー当日はまだ予報範囲外です');
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    targetDates.forEach((_, index) => {
+                        const strip = document.getElementById(`weather-day${index + 1}`);
+                        if (strip) strip.innerHTML = `<div class="day-weather-note">⚠️ 天気データの取得に失敗しました</div>`;
+                    });
+                });
+        })();
+    </script>
+
+</body>
+
+</html>
