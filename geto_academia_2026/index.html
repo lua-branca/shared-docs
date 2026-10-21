@@ -253,6 +253,20 @@
             padding: 2rem 1rem;
             border-top: 1px solid var(--border-color);
         }
+        .map-marker{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;color:#fff;font-size:13px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 4px #00000059}
+        .leaflet-popup-content-wrapper{border-radius:12px}
+        .leaflet-popup-content{margin:12px 14px;font-size:14px;line-height:1.5}
+        .leaflet-popup-content strong{display:block;margin-bottom:2px;color:#222}
+        .leaflet-popup-content .pm-note{color:#666;font-size:13px}
+        .leaflet-popup-content .pm-link{display:inline-block;margin-top:8px;font-size:13px;color:#a08f7b;border-bottom:1px solid #a08f7b;text-decoration:none}
+        .map-legend{display:flex;flex-wrap:wrap;gap:0.4rem 1rem;margin-top:0.6rem;font-size:0.82rem;color:var(--text-muted)}
+        .map-legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:0.35rem;background:var(--c)}
+        .map-list{list-style:none;padding:0;margin:1rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0.4rem 1rem}
+        .map-list li{display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;padding:0.35rem 0.4rem;border-radius:8px}
+        .map-list li:hover{background:var(--card-bg)}
+        .map-list .map-marker{flex:none;width:24px;height:24px;font-size:12px}
+        .map-list .ml-name{font-weight:500;line-height:1.4}
+        .map-list .ml-note{display:block;font-size:0.8rem;color:var(--text-muted)}
     </style>
 </head>
 
@@ -292,6 +306,19 @@
                 <li>日ごとのプログラムと巡る場所は、まだ案内がない（主催側の連絡待ち）</li>
                 <li>10/26に現地から北上駅までどう移動するか</li>
                 <li>本募集の応募要件にある「普通自動車運転免許」について、持っていない場合の扱い</li>
+                <li>プログラム中のクマ対策</li>
+            </ul>
+        </div>
+
+        <div class="alert">
+            <strong>🐻 クマ対策</strong>
+            <ul>
+                <li><b>2025年10月16日、夏油温泉と同じ和賀町岩崎新田の瀬美温泉で、露天風呂を清掃中の従業員がクマに襲われ亡くなった。</b>今回とほぼ同じ場所・同じ時期</li>
+                <li>北上市では2026年も7月・8月に住宅地や学校の近くで目撃。10/21昼にも北鬼柳で出没の報道</li>
+                <li>10月下旬は冬眠前で、クマが最も活発に餌を探す時期</li>
+                <li>朝夕・薄暗い時間に一人で外を歩かない（露天風呂や建物のまわりも）</li>
+                <li>クマよけの鈴など音の出るものを身につける。クマよけスプレーは新幹線に持ち込めるか不明なので、必要なら現地で手配できるか確認</li>
+                <li>主催側にクマ対策を聞いておく。出発前に北上市のクマ出没情報を確認</li>
             </ul>
         </div>
 
@@ -387,8 +414,102 @@
             </div>
         </div>
 
+        <h2 class="section-title">🙏 祈りの系譜：縄文から修験まで</h2>
+        <p class="memo">北上の信仰の跡を時代順に。縄文の石組み → 平安の山の寺 → 修験・念仏の芸能（鬼剣舞・神楽）→ 山の神（駒ヶ岳）。</p>
+        <div class="spots">
+            <div class="card">
+                <h4>樺山遺跡（稲瀬町）｜縄文中期</h4>
+                <p>石を並べた配石遺構が残る国の史跡（1977年指定）。墓地という確証はなく、祭祀の場だった可能性も。秋田の大湯環状列石（縄文後期）と形が似ていて、そのルーツとみる見方もある。</p>
+                <span class="tag">縄文の祈りの場？</span>
+            </div>
+            <div class="card">
+                <h4>八天遺跡（更木）｜縄文後期・約4,000年前</h4>
+                <p>大規模な集落跡で国の史跡。墓域から出た「耳・鼻・口形土製品」は重要文化財。子どもの墓とみられる配石も見つかっている。</p>
+                <span class="tag">博物館本館で展示テーマに</span>
+            </div>
+            <div class="card">
+                <h4>国見山廃寺跡と極楽寺｜平安</h4>
+                <p>北上川東岸、国見山（約245m）の南麓に広がる山岳寺院の跡。9世紀中ごろ創建の可能性があり、最盛期は10世紀後半〜11世紀（安倍氏の時代と重なる）。発掘で分かった大規模な山岳寺院としては日本最北。いまも麓に国見山極楽寺がある。2004年に国の史跡。</p>
+                <span class="tag">博物館本館に銅竜頭（重文）</span>
+            </div>
+            <div class="card">
+                <h4>鬼剣舞と修験</h4>
+                <p>起源には諸説。修験道の祖・役小角が念仏を唱えて踊ったのが始まりとする説、羽黒山の山伏が人々を救うために踊ったとする説など。盆に亡魂を鎮めて送る念仏踊りの一種で、「剣舞」は悪霊を踏み鎮める呪法「反閇（へんばい）」が語源という説も。鬼の面は五大明王を表し、だから角がない。2022年、「風流踊」としてユネスコ無形文化遺産に。</p>
+                <span class="tag">鬼＝明王という見立て</span>
+            </div>
+            <div class="card">
+                <h4>大乗神楽｜いまに残る修験の痕跡</h4>
+                <p>「修験山伏の行法を色濃く残す特異な神楽」で、北上市の資料では「修験道で発祥した頃の型を最も色濃く残している芸能」とされる。九字など修験の呪法をはっきり行う。もとは寺の本尊の御開帳や、別当（寺社を管理した修験の家）の代替わりに行う「大乗会」で舞われた。伝わるのは北上市と花巻市の一部だけで、今も複数の保存会があり、毎年6月ごろに大乗神楽大会（2025年は6団体）。「和賀大乗神楽」もある。</p>
+                <span class="tag">早池峰のように山にまとまらず、集落の芸能・家に散らばって残る</span>
+            </div>
+            <div class="card">
+                <h4>岩崎の別当家</h4>
+                <p>和賀町の文化財報告書に『岩崎深山権現別當伍大院田村家』がある。夏油の入り口・岩崎に、権現の別当を務めた家（多くは修験の家）があったことがうかがえる。報告書の中身は未確認。明治初めの修験道廃止で、山伏の痕跡は神社や芸能に姿を変えて残ることが多い。</p>
+                <span class="tag">現地で聞きたい</span>
+            </div>
+            <div class="card">
+                <h4>山に入るもう一つの人々：マタギ</h4>
+                <p>和賀川の最上流・西和賀町沢内には、冬から春先に狩人（マタギ・ヤマダチ・鉄砲打ち）が狩りをする暮らしがあった。熊狩りの用具が充実した沢内の民俗資料は国の重要有形民俗文化財。夏油川も和賀川の流域。夏油温泉の「狩人が見つけた」発見伝説とのつながりは未確認（東北の山の湯によくある型の伝説でもある）。</p>
+                <span class="tag">山伏とマタギの関わりは資料では空白</span>
+            </div>
+            <div class="card">
+                <h4>山の神：駒ヶ岳と経塚</h4>
+                <p>駒ヶ岳には白い神馬が住んでいたという伝承があり、その馬を山頂に埋めて「神馬の社」と呼んだのが山の名の由来という（金ケ崎町史）。和賀町煤孫の「上須々孫館経塚」（経典を土に埋めた跡）は2024年に市の史跡に。経塚山の名の由来は未確認。</p>
+                <span class="tag">→ 駒形神社 奥宮へ</span>
+            </div>
+        </div>
+        <p class="memo">※起源の話は伝承・諸説を含む。経塚山の名の由来や、夏油三山で修験者が活動していたことは、今回は裏付けが取れていない。</p>
+
+        <h2 class="section-title">❓ 現地で聞きたいこと</h2>
+        <div class="card">
+            <ul class="check">
+                <li>岩崎の深山権現と、別当の田村家（伍大院）のこと</li>
+                <li>夏油三山（特に経塚山）に山伏が入っていた言い伝えはあるか。経塚山の名の由来</li>
+                <li>夏油や岩崎に、熊を獲る狩人の集落や言い伝えがあったか。発見伝説の「狩人」は沢内のマタギとつながる話として語られているか</li>
+                <li>和賀大乗神楽・岩崎鬼剣舞を見られる機会はあるか</li>
+                <li>本募集の「普通自動車運転免許」要件について、持っていない場合の扱い</li>
+            </ul>
+            <p class="memo" style="margin-top:0.6rem">現地で聞いた話は一次情報。誰から聞いたかも一緒にメモしておく。</p>
+        </div>
+
+        <h2 class="section-title">🏛️ 北上の歴史を知る博物館</h2>
+        <div class="spots">
+            <div class="card">
+                <h4>北上市立博物館（本館）</h4>
+                <p>北上の歴史を6つのテーマで紹介：国見山廃寺／樺山遺跡と八天遺跡／江釣子古墳群／<b>和賀氏とその時代</b>／藩境のくらし／北上川舟運。国見山廃寺の展示室には重要文化財の銅竜頭4体。</p>
+                <p class="memo">北上市立花14地割59（展勝地のそば）／9:00〜17:00（入館16:30まで）／大人500円／☎0197-64-1756</p>
+                <span class="tag">和賀氏を知るならまずここ</span>
+            </div>
+            <div class="card">
+                <h4>みちのく民俗村</h4>
+                <p>本館の隣にある野外博物館。古民家などを移築して、昔の北上のくらしを伝える。</p>
+                <p class="memo">9:00〜17:00（入館16:30まで）</p>
+            </div>
+            <div class="card">
+                <h4>和賀分館</h4>
+                <p>2016年に新設。北上の通史展示のほか、動物のはく製・昆虫標本・和賀鉱山の産物など自然系の資料。夏油の入り口・和賀町にある。</p>
+                <p class="memo">北上市和賀町横川目（市役所和賀庁舎1階）／10:00〜16:00（入館15:30まで）／無料</p>
+            </div>
+            <div class="card">
+                <h4>鬼の館</h4>
+                <p>鬼にまつわる資料の展示を通して、北上の民俗と文化を伝える。岩崎鬼剣舞の歴史や面も。企画展・体験会・鬼剣舞の公演も。</p>
+                <p class="memo">和賀町岩崎（岩崎城跡のそば）</p>
+            </div>
+        </div>
+        <p class="memo">※休館日は資料によって「4〜11月は無休」「原則月曜休館」と食い違いあり。行く前に博物館（☎0197-64-1756）に確認する。今回の日程で寄れるのは、主にプログラムの空き時間か次回の訪問。</p>
+
         <h2 class="section-title">🗺️ マップ</h2>
         <div id="map"></div>
+        <div class="map-legend">
+            <span style="--c:#6b7280">駅</span>
+            <span style="--c:#2f6f8f">温泉・高原</span>
+            <span style="--c:#8a4b3a">城跡</span>
+            <span style="--c:#7c6f5e">神社</span>
+            <span style="--c:#3f7d68">資料館</span>
+            <span style="--c:#9a7b2f">遺跡・古寺</span>
+            <span style="--c:#b23a2e">注意</span>
+        </div>
+        <ol class="map-list" id="map-list"></ol>
 
         <h2 class="section-title">📅 スケジュール</h2>
 
@@ -470,25 +591,69 @@
     <footer>最終更新：2026-10-21</footer>
 
     <script>
-        const map = L.map('map', { scrollWheelZoom: false }).setView([39.25, 141.0], 11);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        var colours = {
+            station: '#6b7280',
+            onsen: '#2f6f8f',
+            castle: '#8a4b3a',
+            shrine: '#7c6f5e',
+            museum: '#3f7d68',
+            ruins: '#9a7b2f',
+            caution: '#b23a2e'
+        };
+
+        var points = [
+            { lat: 39.2822, lng: 141.1227, kind: 'station', name: 'JR北上駅', note: '10/24 10:00 東口集合' },
+            { lat: 39.3290, lng: 141.1576, kind: 'ruins', name: '八天遺跡', note: '縄文後期・耳鼻口形土製品' },
+            { lat: 39.3177, lng: 141.1398, kind: 'castle', name: '二子城（飛勢城）付近', note: '和賀氏の本城' },
+            { lat: 39.2637, lng: 141.1417, kind: 'ruins', name: '国見山廃寺跡・極楽寺', note: '平安の山岳寺院・日本最北' },
+            { lat: 39.2714, lng: 141.1304, kind: 'museum', name: '北上市立博物館・みちのく民俗村', note: '和賀氏とその時代・国見山廃寺' },
+            { lat: 39.2406, lng: 141.1307, kind: 'ruins', name: '樺山遺跡', note: '縄文中期・配石遺構' },
+            { lat: 39.3066, lng: 140.9792, kind: 'museum', name: '博物館 和賀分館', note: '市役所和賀庁舎1階・無料' },
+            { lat: 39.2757, lng: 141.0455, kind: 'museum', name: '鬼の館', note: '岩崎鬼剣舞の歴史と面' },
+            { lat: 39.2812, lng: 141.0457, kind: 'castle', name: '岩崎城跡', note: '1600年 岩崎一揆の舞台' },
+            { lat: 39.2385, lng: 140.9571, kind: 'caution', name: '瀬美温泉', note: '2025年10月 クマによる死亡事故' },
+            { lat: 39.2390, lng: 140.9497, kind: 'onsen', name: '入畑ダム', note: '焼石岳方面の眺め' },
+            { lat: 39.2365, lng: 140.9059, kind: 'onsen', name: '夏油高原スキー場', note: '紅葉まつりの会場' },
+            { lat: 39.2125, lng: 140.8865, kind: 'onsen', name: '夏油温泉', note: '標高約700mの秘湯' },
+            { lat: 39.1954, lng: 140.9199, kind: 'shrine', name: '駒形神社 奥宮', note: '駒ヶ岳山頂（夏油三山）' },
+            { lat: 39.1368, lng: 141.1385, kind: 'shrine', name: '駒形神社', note: '奥州市水沢・陸中国一宮' }
+        ];
+
+        var map = L.map('map', { scrollWheelZoom: false });
+
+        // 国土地理院の淡色地図（lua-branca.com の英語版記事と同じ）。APIキー不要。
+        L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">国土地理院</a>'
         }).addTo(map);
 
-        const spots = [
-            [39.2822, 141.1227, 'JR北上駅（10:00 東口集合）'],
-            [39.2757, 141.0455, '鬼の館（岩崎鬼剣舞）'],
-            [39.2390, 140.9497, '入畑ダム'],
-            [39.2365, 140.9059, '夏油高原スキー場'],
-            [39.2125, 140.8865, '夏油温泉'],
-            [39.2812, 141.0457, '岩崎城跡（岩崎一揆）'],
-            [39.3177, 141.1398, '二子城（和賀氏の本城）付近'],
-            [39.1954, 140.9199, '駒形神社 奥宮（駒ヶ岳山頂）'],
-            [39.1368, 141.1385, '駒形神社（奥州市水沢）']
-        ];
-        const markers = spots.map(([lat, lng, name]) => L.marker([lat, lng]).addTo(map).bindPopup(name));
-        map.fitBounds(L.featureGroup(markers).getBounds().pad(0.15));
+        var latlngs = [];
+        points.forEach(function (p, i) {
+            latlngs.push([p.lat, p.lng]);
+            var icon = L.divIcon({
+                className: '',
+                html: '<div class="map-marker" style="background:' + (colours[p.kind] || colours.station) + '">' + (i + 1) + '</div>',
+                iconSize: [26, 26],
+                iconAnchor: [13, 13],
+                popupAnchor: [0, -14]
+            });
+            var q = encodeURIComponent(p.lat + ',' + p.lng);
+            var html = '<strong>' + (i + 1) + '. ' + p.name + '</strong>' +
+                (p.note ? '<span class="pm-note">' + p.note + '</span>' : '') +
+                '<br><a class="pm-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=' + q + '">Googleマップで開く</a>';
+            var marker = L.marker([p.lat, p.lng], { icon: icon, title: p.name }).addTo(map).bindPopup(html);
+
+            var li = document.createElement('li');
+            li.innerHTML = '<div class="map-marker" style="background:' + (colours[p.kind] || colours.station) + '">' + (i + 1) + '</div>' +
+                '<div><span class="ml-name">' + p.name + '</span><span class="ml-note">' + (p.note || '') + '</span></div>';
+            li.addEventListener('click', function () {
+                document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                map.setView([p.lat, p.lng], 14);
+                marker.openPopup();
+            });
+            document.getElementById('map-list').appendChild(li);
+        });
+        map.fitBounds(latlngs, { padding: [24, 24] });
     </script>
 </body>
 
