@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夏油アカデミア 旅のしおり 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        :root {
+            --bg-color: #1a1210;
+            --card-bg: rgba(48, 32, 26, 0.72);
+            --border-color: rgba(222, 122, 64, 0.32);
+            --primary-color: #e8894a;
+            --primary-soft: #f3b183;
+            --accent-color: #d9b44a;
+            --text-color: #f7f2ee;
+            --text-muted: #c2b2a8;
+            --alert-bg: rgba(160, 48, 36, 0.28);
+            --alert-border: rgba(232, 98, 74, 0.6);
+            --font-main: 'Noto Sans JP', sans-serif;
+            --font-eng: 'Outfit', sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 10% 15%, rgba(120, 52, 28, 0.35) 0px, transparent 50%),
+                radial-gradient(at 90% 85%, rgba(140, 100, 30, 0.22) 0px, transparent 50%);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 3.5rem 1rem 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .eyebrow {
+            font-family: var(--font-eng);
+            letter-spacing: 0.3em;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: clamp(1.5rem, 5vw, 2.1rem);
+            letter-spacing: 0.12em;
+            margin: 0.6rem 0 0;
+            background: linear-gradient(135deg, #fff 30%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-weight: 300;
+            color: var(--primary-soft);
+            margin-top: 0.8rem;
+            letter-spacing: 0.06em;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 3rem 0 1.2rem;
+            padding-left: 0.8rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+        }
+
+        .card .label {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            letter-spacing: 0.1em;
+        }
+
+        .card .value {
+            font-weight: 500;
+            margin-top: 0.2rem;
+        }
+
+        .card .note {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .alert {
+            background: var(--alert-bg);
+            border: 1px solid var(--alert-border);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .alert strong { color: #ffb3a3; }
+
+        .alert ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+
+        #map {
+            height: 380px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .day {
+            margin-bottom: 2rem;
+        }
+
+        .day-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.4rem 1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .day-head h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--primary-soft);
+        }
+
+        .weather {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .timeline {
+            border-left: 2px solid var(--border-color);
+            margin-left: 0.4rem;
+            padding-left: 1.1rem;
+        }
+
+        .item {
+            position: relative;
+            padding: 0.4rem 0 0.8rem;
+        }
+
+        .item::before {
+            content: '';
+            position: absolute;
+            left: -1.55rem;
+            top: 0.95rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-color);
+        }
+
+        .item.key::before { background: var(--accent-color); box-shadow: 0 0 0 4px rgba(217, 180, 74, 0.25); }
+
+        .time {
+            font-family: var(--font-eng);
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 0.95rem;
+        }
+
+        .what { font-weight: 500; }
+
+        .memo {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .spots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .spots h4 {
+            margin: 0 0 0.3rem;
+            color: var(--primary-soft);
+        }
+
+        .spots p { margin: 0; font-size: 0.9rem; }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            padding: 0 0.6rem;
+            margin-top: 0.4rem;
+            color: var(--text-muted);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.55rem 0.6rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        th { color: var(--accent-color); font-weight: 500; white-space: nowrap; }
+
+        td.num { text-align: right; white-space: nowrap; font-family: var(--font-eng); }
+
+        .table-wrap { overflow-x: auto; }
+
+        ul.check { list-style: none; padding: 0; margin: 0; }
+
+        ul.check li::before { content: '□ '; color: var(--primary-color); }
+
+        a { color: var(--primary-soft); }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="eyebrow">Geto Academia 2026</div>
+        <h1>夏油アカデミア 旅のしおり</h1>
+        <div class="subtitle">おためし地域おこし協力隊｜岩手県北上市・夏油エリア<br>2026年10月24日（土）〜26日（月）</div>
+    </header>
+
+    <main>
+        <div class="meta-grid">
+            <div class="card">
+                <div class="label">主催／運営</div>
+                <div class="value">北上市／GETO Village株式会社</div>
+            </div>
+            <div class="card">
+                <div class="label">集合</div>
+                <div class="value">10/24（土）10:00</div>
+                <div class="note">JR北上駅 東口</div>
+            </div>
+            <div class="card">
+                <div class="label">解散</div>
+                <div class="value">10/26（月）16:00頃</div>
+                <div class="note">私は13:30頃に途中退出の予定</div>
+            </div>
+            <div class="card">
+                <div class="label">費用</div>
+                <div class="value">体験料・宿泊料 無料</div>
+                <div class="note">北上駅までの往復交通費と、プログラム外の食事は自己負担</div>
+            </div>
+        </div>
+
+        <div class="alert">
+            <strong>⚠️ 未確定・確認待ち</strong>
+            <ul>
+                <li>日ごとのプログラムと巡る場所は、まだ案内がない（主催側の連絡待ち）</li>
+                <li>10/26に現地から北上駅までどう移動するか</li>
+                <li>本募集の応募要件にある「普通自動車運転免許」について、持っていない場合の扱い</li>
+            </ul>
+        </div>
+
+        <h2 class="section-title">🍁 夏油エリアを知る</h2>
+        <div class="spots">
+            <div class="card">
+                <h4>夏油温泉</h4>
+                <p>栗駒国定公園内、標高約700mの秘湯。古くは「嶽（岳）の湯」と呼ばれた。冬は豪雪で入れないため「夏湯」、夏の陽にゆらぐ湯が油のように見えて「夏油」になったと伝わる。「ゲトウ」はアイヌ語の「グット・オ（崖のあるところ）」が由来とも言われる。</p>
+                <span class="tag">850年ほど前、傷ついた猿を追った狩人が見つけたとの伝説</span>
+            </div>
+            <div class="card">
+                <h4>夏油温泉観光ホテル</h4>
+                <p>GETO Villageが運営。営業は5月〜10月で、協力隊の夏の活動拠点（5月〜11月上旬）。2026年9月21日〜10月31日は、温泉と寝具を組み合わせた宿泊プログラム「眠りの湯治」を試験運用中。</p>
+                <span class="tag">今季の営業期間の終わり目</span>
+            </div>
+            <div class="card">
+                <h4>元湯夏油</h4>
+                <p>夏油温泉の元湯。旅館部と湯治向けの自炊部があり、源泉は7つ。夏油三山（牛形山・経塚山・駒ヶ岳）の登山口でもある。周辺には石灰華の「天狗岩」がある。</p>
+                <span class="tag">国民保養温泉地</span>
+            </div>
+            <div class="card">
+                <h4>夏油高原スキー場</h4>
+                <p>夏はキャンプ場、冬はスキー場。ゴンドラ山頂からは北上平野が見渡せ、晴れた日は早池峰山も。協力隊の冬の拠点の一つ。</p>
+                <span class="tag">紅葉まつりの会場</span>
+            </div>
+            <div class="card">
+                <h4>夏油古民家カフェ kobiru</h4>
+                <p>協力隊の冬の拠点の一つ。空き家・空き施設の活用というミッションを考えるうえで見ておきたい場所。</p>
+            </div>
+            <div class="card">
+                <h4>岩崎鬼剣舞と鬼の館</h4>
+                <p>夏油の入り口・和賀町岩崎は、国の重要無形民俗文化財「岩崎鬼剣舞」の地で、鬼剣舞の元祖とされる。北上市立鬼の館で、鬼剣舞の歴史や面を見られる。</p>
+                <span class="tag">歴史・民俗の視点</span>
+            </div>
+        </div>
+
+        <div class="alert" style="background: var(--card-bg); border-color: var(--border-color);">
+            <strong style="color: var(--accent-color);">🗒️ 季節のこと</strong>
+            <ul>
+                <li>紅葉の見頃は例年10月上旬〜下旬。今回はぎりぎり終わりかけの時期</li>
+                <li>夏油温泉への県道は例年11月中旬〜5月上旬に冬期閉鎖。毎年5mを超える豪雪地帯</li>
+            </ul>
+        </div>
+
+        <h2 class="section-title">🏯 和賀の豪族と地名</h2>
+        <p class="memo">夏油の入り口・和賀町岩崎は、中世に和賀郡（いまの北上市周辺）を治めた和賀氏の土地。北上市内の地名の多くが、和賀氏の一族の名と重なる。</p>
+        <div class="spots">
+            <div class="card">
+                <h4>前史：安倍氏の奥六郡</h4>
+                <p>平安時代、和賀郡は安倍氏が治めた「奥六郡」（胆沢・江刺・和賀・稗貫・紫波・岩手）のひとつ。北上市中心部の黒沢尻を名のった黒沢尻氏は、安倍頼時の五男・正任に始まるとも伝わる（詳細は不明）。</p>
+                <span class="tag">前九年合戦の舞台の一角</span>
+            </div>
+            <div class="card">
+                <h4>和賀氏の出自（諸説あり）</h4>
+                <p>鎌倉時代から戦国時代まで和賀郡を本拠にした国人。出自は系図ごとに違う：源頼朝を遠祖とする説／多田忠明が1191年に刈田郡から移ったとする説／中条氏の系統で、和田義盛の養子となった成季の子・義行が承久年間に下向したとする説。</p>
+                <span class="tag">鎌倉とのつながりも</span>
+            </div>
+            <div class="card">
+                <h4>二子城と岩崎城</h4>
+                <p>惣領家の本城は二子城（飛勢城・北上市二子町）。岩崎城は夏油川沿いの河岸段丘に築かれた山城で、二子城に次ぐ規模とされる。</p>
+            </div>
+            <div class="card">
+                <h4>奥州仕置と岩崎一揆</h4>
+                <p>1590年、小田原に参陣しなかったため所領没収。和賀・稗貫一揆に敗れ、翌年に南部氏の領地に。1600年、関ヶ原の混乱に乗じて和賀忠親が旧家臣と挙兵し岩崎城にこもる（岩崎一揆）が、翌年に落城。背後には伊達政宗の支援があったといわれる。</p>
+                <span class="tag">岩崎＝和賀氏が最後に戦った場所</span>
+            </div>
+            <div class="card">
+                <h4>地名になった一族</h4>
+                <p>鬼柳氏（北上市鬼柳）／江釣子氏（江釣子・江釣子館）／黒沢尻氏（北上市中心部）／須々孫氏（和賀町のほぼ全域を領し、のち煤孫と改姓）など。</p>
+            </div>
+            <div class="card">
+                <h4>さらに古く：江釣子古墳群</h4>
+                <p>和賀川の北岸、江釣子・北鬼柳・和賀町長沼にまたがる古墳群。八幡・猫谷地・五条丸の3地区に計130基余りの横穴式石室の古墳があり、1979年に国の史跡に指定。</p>
+            </div>
+        </div>
+        <p class="memo">※和賀氏の出自・一族の記述は、主に系図類による伝承。出典の確かさは系図ごとに差がある。</p>
+
+        <h2 class="section-title">⛩️ 駒形神社と奥宮</h2>
+        <div class="spots">
+            <div class="card">
+                <h4>駒形神社（奥州市水沢）</h4>
+                <p>陸中国一宮。『延喜式』神名帳に載る名社。「駒形大神」と総称される6柱（天照大御神・天常立尊・国狭立尊・吾勝尊・置瀬尊・彦火尊）を祀る。春の例祭の「子供騎馬武者行列」で知られる。</p>
+            </div>
+            <div class="card">
+                <h4>奥宮（駒ヶ岳山頂）</h4>
+                <p>駒ヶ岳（金ケ崎町・標高約1,130m）の山頂にある。明治以前はこの山頂の本宮（奥宮）と里宮で祀られていて、明治36年（1903年）に御神霊を山頂から水沢の現在地へ移した。山頂の社殿は北東の早池峰山の方角を向いて建つという。</p>
+                <span class="tag">駒ヶ岳は夏油三山のひとつ</span>
+            </div>
+            <div class="card">
+                <h4>夏油とのつながり</h4>
+                <p>駒ヶ岳は、牛形山・経塚山とならぶ夏油三山のひとつ。奥宮は夏油温泉から南東へ直線で約3.5km、北上市と金ケ崎町の境のあたりにある。里宮は金ケ崎町西根に（場所は資料によって表記にばらつきあり）。</p>
+                <span class="tag">今回の日程で登るのは難しい</span>
+            </div>
+        </div>
+
+        <h2 class="section-title">🗺️ マップ</h2>
+        <div id="map"></div>
+
+        <h2 class="section-title">📅 スケジュール</h2>
+
+        <div class="day">
+            <div class="day-head">
+                <h3>10/24（土）鎌倉 → 北上・集合</h3>
+                <span class="weather">☁️ くもり 18℃／8℃ 降水30%</span>
+            </div>
+            <div class="timeline">
+                <div class="item"><div class="time">5:51</div><div class="what">鎌倉発（横須賀線）</div></div>
+                <div class="item"><div class="time">6:49</div><div class="what">東京着</div><div class="memo">乗り換え27分</div></div>
+                <div class="item"><div class="time">7:16</div><div class="what">東京発 はやぶさ101号（盛岡行）</div><div class="memo">10時に間に合う新幹線はこの1本だけ</div></div>
+                <div class="item"><div class="time">9:42</div><div class="what">北上着</div></div>
+                <div class="item key"><div class="time">10:00</div><div class="what">JR北上駅 東口に集合</div></div>
+                <div class="item"><div class="time">〜</div><div class="what">プログラム</div><div class="memo">内容は主催側の案内待ち</div></div>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-head">
+                <h3>10/25（日）プログラム</h3>
+                <span class="weather">☁️ くもり 22℃／14℃ 降水40%</span>
+            </div>
+            <div class="timeline">
+                <div class="item"><div class="time">終日</div><div class="what">プログラム</div><div class="memo">地域の人との交流・事業構想ワークショップ（予定）</div></div>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-head">
+                <h3>10/26（月）途中退出 → 新橋</h3>
+                <span class="weather">☁️ くもり 17℃／11℃ 降水30%</span>
+            </div>
+            <div class="timeline">
+                <div class="item"><div class="time">午前〜13:30頃</div><div class="what">プログラム</div></div>
+                <div class="item"><div class="time">13:30頃</div><div class="what">現地を出て北上駅へ</div><div class="memo">移動手段は要確認</div></div>
+                <div class="item key"><div class="time">14:30</div><div class="what">北上発 やまびこ60号 → 仙台で はやぶさ24号</div><div class="memo">乗り換えなしの やまびこ60号 直通なら新橋17:43着</div></div>
+                <div class="item"><div class="time">17:20</div><div class="what">新橋着</div></div>
+                <div class="item"><div class="time">18:00</div><div class="what">新橋で予定</div></div>
+            </div>
+        </div>
+
+        <p class="memo">天気は10/21発表の北上市の予報。夏油高原は山の中なので、さらに4〜5℃低いと考える。</p>
+
+        <h2 class="section-title">🚄 交通費</h2>
+        <div class="table-wrap">
+            <table>
+                <tr><th>区間</th><th>通常</th><th>大人の休日倶楽部ミドル（5%引き・概算）</th></tr>
+                <tr><td>鎌倉 → 北上</td><td class="num">15,020円</td><td class="num">約14,260円</td></tr>
+                <tr><td>北上 → 新橋</td><td class="num">14,260円</td><td class="num">約13,540円</td></tr>
+                <tr><td>新橋 → 鎌倉</td><td class="num">約1,000円</td><td class="num">対象外</td></tr>
+            </table>
+        </div>
+        <p class="memo">えきねっとの「トクだ値」が5%引きより安いこともあるので、予約のときに比べる。</p>
+
+        <h2 class="section-title">🎒 持ち物</h2>
+        <div class="card">
+            <ul class="check">
+                <li>薄手のダウンか厚めの上着（山の朝晩は一ケタ前半）</li>
+                <li>重ね着できる服</li>
+                <li>歩きやすい靴</li>
+                <li>折りたたみ傘</li>
+                <li>2泊分の着替え・洗面用具</li>
+                <li>ノートPC・充電器（事業構想ワークショップ用）</li>
+                <li>26日夜の新橋の予定に合わせた服</li>
+            </ul>
+        </div>
+
+        <h2 class="section-title">📞 連絡先・参考</h2>
+        <div class="table-wrap">
+            <table>
+                <tr><th>GETO Village株式会社</th><td>岩手県北上市和賀町岩崎3地割71</td></tr>
+                <tr><th>北上観光コンベンション協会</th><td>0197-65-0300</td></tr>
+                <tr><th>募集ページ</th><td><a href="https://iju.pref.iwate.jp/16526/" target="_blank" rel="noopener">いわて移住（夏油アカデミア おためし地域おこし協力隊）</a></td></tr>
+            </table>
+        </div>
+    </main>
+
+    <footer>最終更新：2026-10-21</footer>
+
+    <script>
+        const map = L.map('map', { scrollWheelZoom: false }).setView([39.25, 141.0], 11);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+
+        const spots = [
+            [39.2822, 141.1227, 'JR北上駅（10:00 東口集合）'],
+            [39.2757, 141.0455, '鬼の館（岩崎鬼剣舞）'],
+            [39.2390, 140.9497, '入畑ダム'],
+            [39.2365, 140.9059, '夏油高原スキー場'],
+            [39.2125, 140.8865, '夏油温泉'],
+            [39.2812, 141.0457, '岩崎城跡（岩崎一揆）'],
+            [39.3177, 141.1398, '二子城（和賀氏の本城）付近'],
+            [39.1954, 140.9199, '駒形神社 奥宮（駒ヶ岳山頂）'],
+            [39.1368, 141.1385, '駒形神社（奥州市水沢）']
+        ];
+        const markers = spots.map(([lat, lng, name]) => L.marker([lat, lng]).addTo(map).bindPopup(name));
+        map.fitBounds(L.featureGroup(markers).getBounds().pad(0.15));
+    </script>
+</body>
+
+</html>
